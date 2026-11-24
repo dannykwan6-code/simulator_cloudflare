@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>簡中網黃模擬器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#f7f5f2; --surface:#ffffff; --surface2:#f0ede8; --line:#e3ded6;
+--text:#1c1a17; --muted:#6f6a61; --accent:#b4532a; --accent-soft:#fdf0e9;
+--gold:#8a6d2b; --green:#2f7d4f; --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+:root{ --bg:#161513; --surface:#1f1d1a; --surface2:#292622; --line:#38332d;
+--text:#ece8e1; --muted:#a39c90; --accent:#e07a4a; --accent-soft:#332016; --gold:#c9a44a;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",system-ui,sans-serif;line-height:1.75}
+button,input,textarea,select{font:inherit}
+button,[role="button"]{min-height:44px}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+header{padding:8px 0 16px;border-bottom:1px solid var(--line)}
+h1{font-family:"Noto Serif TC",serif;font-size:26px;margin:0;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:14px;margin:4px 0 0}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:16px 0;font-size:14px}
+.how b{color:var(--accent)}
+.how ul{margin:6px 0 0;padding-left:18px;color:var(--muted)}
+.status{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px}
+.chip strong{color:var(--accent)}
+.bar{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width.5s}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;min-height:320px}
+.turn{margin-bottom:22px}
+.turn:last-child{margin-bottom:0}
+.player{background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:12px;color:var(--text)}
+.player::before{content:"你 · ";font-weight:700;color:var(--accent)}
+.narr p{margin:0 0 12px;font-size:16px}
+.narr p:last-child{margin-bottom:0}
+.meta{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted);white-space:pre-line}
+.chatbox{background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:14px;margin:12px 0;white-space:pre-line}
+.choices{display:grid;gap:10px;margin:16px 0}
+.choice{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.choice:hover{border-color:var(--accent)}
+.choice.k{font-weight:700;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-size:13px;margin-top:2px}
+.free{display:flex;gap:8px;margin-top:8px}
+.free textarea{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:12px;min-height:52px;resize:vertical}
+.send{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:0 20px;cursor:pointer;font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.btn{background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:8px 16px;cursor:pointer;font-size:14px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-top:16px}
+details summary{cursor:pointer;font-weight:700;min-height:36px}
+.field{margin-top:12px}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.field input,.field select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
+.note{font-size:13px;color:var(--muted)}
+.typing{color:var(--muted);font-size:14px;padding:8px 0}
+footer{margin-top:24px;text-align:center;color:var(--muted);font-size:13px}
+.setup{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:16px 0}
+.setup h2{font-family:"Noto Serif TC",serif;font-size:22px;margin:0 0 4px}
+.setup .lead{color:var(--muted);font-size:14px;margin:0 0 16px}
+.presets{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.preset{text-align:left;background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.preset:hover,.preset.sel{border-color:var(--accent);background:var(--accent-soft)}
+.preset b{display:block;font-size:15px;margin-bottom:2px}
+.preset span{font-size:12.5px;color:var(--muted);line-height:1.5;display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.setup .field{margin-top:0;margin-bottom:12px}
+.setup .field input,.setup .field select,.setup .field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text)}
+.traits{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trait{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;font-size:14px}
+.trait.sel{border-color:var(--accent);background:var(--accent-soft)}
+.trait b{display:block}
+.trait span{color:var(--muted);font-size:12.5px}
+.startBtn{width:100%;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:14px;font-weight:700;font-size:16px;cursor:pointer;margin-top:6px}
+.setupErr{color:#b42318;font-size:13px;min-height:20px;margin-top:6px}
+.modeGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.modeCard{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface2);font-size:13.5px;line-height:1.65}
+.modeCard b{display:block;font-size:14.5px;margin-bottom:2px}
+.modeCard.on{border-color:var(--accent);background:var(--accent-soft)}
+pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+@media (prefers-color-scheme: light){pre{background:#2a2723}}
+.deploySteps{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--muted);line-height:1.7}
+@media(max-width:640px){.modeGrid{grid-template-columns:1fr}}
+.idcard{background:var(--accent-soft);border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:12px;line-height:1.7}
+.hidden{display:none!important}
+@media(max-width:640px){.presets{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.traits{grid-template-columns:1fr}}
+@media(max-width:520px){.free{flex-direction:column}.send{padding:12px} h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>簡中網黃模擬器</h1>
+<p class="sub" id="headerSub">第一步：揀你嘅身份設定。揀完先入故事 — 你係邊個，成個故事就點走。</p>
+</header>
+
+<!-- ① 身份設定：開局必經 -->
+<section class="setup" id="setupBox" aria-label="身份設定">
+<h2>先揀身份，再開始</h2>
+<p class="lead">唔好急住入故事。每位朋友開局都要先定身份：用預設一㩒搞掂，或者逐項自己揀、自己改名都得。身份會寫入狀態欄、開場白，同 AI 回應（有接 Key 嗰陣）。</p>
+
+<div class="presets" id="presets">
+<button type="button" class="preset sel" data-preset="0"><b>🌸 經典 · 大櫻</b><span>台灣嚟東京嘅體育老師<br>夜晚經營 X＋Telegram「大櫻」</span></button>
+<button type="button" class="preset" data-preset="1"><b>💼 OL · 小夜</b><span>東京上班族 OL，日頭開會<br>夜晚做直播同寫真嘅「小夜」</span></button>
+<button type="button" class="preset" data-preset="2"><b>🎓 留學生 · 阿莓</b><span>東京留學生，打工度日<br>夜晚拍舞、拍日常嘅「阿莓」</span></button>
+</div>
+
+<div class="grid2">
+<div class="field"><label for="fName">你嘅名（真名／點稱呼你）</label><input id="fName" value="櫻子" placeholder="例如：櫻子"></div>
+<div class="field"><label for="fAlias">夜晚網名（粉絲點叫你）</label><input id="fAlias" value="大櫻" placeholder="例如：大櫻"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="fFrom">你嚟自邊度？</label>
+<select id="fFrom"><option>台灣</option><option>香港</option><option>馬來西亞</option><option>中國內地</option><option>日本本地</option></select></div>
+<div class="field"><label for="fCity">你住喺邊度？</label>
+<select id="fCity"><option>東京 · 合租公寓</option><option>東京 · 一人公寓</option><option>大阪 · 合租公寓</option><option>台北 · 租屋</option><option>香港 · 劏房／租屋</option></select></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="fJob">白天身份／職業</label>
+<select id="fJob"><option>中學體育老師</option><option>小學老師</option><option>OL 上班族</option><option>健身教練</option><option>護士</option><option>便利店／餐飲店員</option><option>留學生（兼職打工）</option><option>自由工作者</option></select></div>
+<div class="field"><label for="fNight">夜晚身份／點賺外快</label>
+<select id="fNight"><option>X＋Telegram 檔案庫創作者</option><option>直播主</option><option>寫真／影片賣家</option><option>舞蹈／短片創作者</option><option>語音／ASMR 創作者</option></select></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="fGoal">今個月嘅目標</label>
+<select id="fGoal"><option>賺錢為將來鋪路</option><option>存錢／還債</option><option>紅遍全網，衝人氣</option><option>體驗人生，開心最緊要</option><option>低調賺錢，唔好俾人發現</option></select></div>
+<div class="field"><label for="fMoney">起始資金（USDT）</label>
+<select id="fMoney"><option value="120">120 · 手緊，新手起步</option><option value="420" selected>420 · 勉強餬口（經典）</option><option value="900">900 · 有少少積蓄</option></select></div>
+</div>
+
+<div class="field"><label>性格路線（㩒一張，影響開局人氣同寫法）</label>
+<div class="traits" id="traits">
+<button type="button" class="trait sel" data-trait="大膽進取" data-pop="6"><b>🔥 大膽進取</b><span>出帖密、敢合作，人氣升得快</span></button>
+<button type="button" class="trait" data-trait="穩打穩紮" data-pop="0"><b>🛡️ 穩打穩紮</b><span>唔衝動，先守住白天份工</span></button>
+<button type="button" class="trait" data-trait="搞笑親民" data-pop="3"><b>😂 搞笑親民</b><span>同粉絲打成一片，留言最熱鬧</span></button>
+<button type="button" class="trait" data-trait="神秘冷感" data-pop="2"><b>🌙 神秘冷感</b><span>出得少但每張都矜貴</span></button>
+</div></div>
+
+<div class="field"><label for="fCustom">想補充自己嘅設定？（可留空）</label><input id="fCustom" placeholder="例如：同 3 個室友合租、有個健身教練朋友、唔想俾同事發現…"></div>
+
+<div class="setupErr" id="setupErr"></div>
+<button class="startBtn" id="startBtn" type="button">以呢個身份開始故事 →</button>
+<p class="note" style="margin-top:8px">開始之後，頂部會顯示你嘅身份卡；㩒「重新開始」可以返嚟改身份重玩。</p>
+</section>
+
+<div id="gameArea" class="hidden">
+<div class="how">
+<b>點玩：</b>
+<ul>
+<li><b>㩒選項</b> — 每回合有 A / B / C / D，㩒一下就推進劇情。</li>
+<li><b>自己打字</b> — 喺下面個框打你想做嘅嘢（幾長都得），㩒「送出」，故事會照你寫嘅接落去。</li>
+<li><b>日子點計</b> — 只有揀／打「瞓覺」先會過一日，狀態欄會顯示第幾日；普通休息唔會跳日。同健身教練傾成定期合作、同室友熟咗之後，再去同一地方會有唔同發展。</li>
+<li><b>想接真 AI（方案 2）</b> — 拉到最底「接 AI 設定」：唔貼 Key 嗰陣，呢頁會自動行<b>伺服器代傳</b>（經本站嘅 /api/chat，Key 喺 Cloudflare 嗰邊，唔會出現喺頁面度，費用計落站主條數）；有貼自己條 Key 嗰陣，就直接連去 DeepSeek，用返你自己嘅額度。兩邊都唔通嗰陣先會跌返內置劇情引擎。</li>
+</ul>
+</div>
+
+<div class="idcard" id="idCard"></div>
+<div class="status" id="status"></div>
+
+<main class="story" id="story" aria-live="polite"></main>
+
+<div class="choices" id="choices"></div>
+
+<form class="free" id="freeForm">
+<textarea id="freeInput" placeholder="或者自己打：你想做咩？例如「返工，影張相放上 X」…" aria-label="自由輸入"></textarea>
+<button class="send" type="submit">送出</button>
+</form>
+<p class="note">Enter 送出 · Shift + Enter 換行</p>
+
+<div class="toolbar">
+<button class="btn" id="restartBtn" type="button">↺ 改身份 / 重新開始</button>
+<button class="btn" id="copyBtn" type="button">複製目前進度文字</button>
+</div>
+</div>
+
+<details id="apiBox">
+<summary>接 AI 設定（方案 2 · DeepSeek）— 可選</summary>
+<p class="note">呢頁本身係靜態網站，接唔到 Muse 本人（Muse 冇公開 API 俾網站接）。方案 2 係接 DeepSeek：平、回應快，玩法同你而家同 Muse 玩一模一樣。而家有兩個模式，㩒「測試連接」嗰陣會自動跟返你有冇貼 Key 嗰個模式嚟試：</p>
+<div class="modeGrid">
+<div class="modeCard" id="modeProxyCard"><b>模式 A · 伺服器代傳（冇貼 Key）</b>頁面會 call 本站相對路徑 <b>/api/chat</b> 同 <b>/api/balance</b>，由 Cloudflare Pages Functions 代傳去 DeepSeek。條 Key 只放喺 Cloudflare 嗰邊嘅環境變數，唔會出現喺頁面、唔會俾朋友見到；朋友唔使貼 Key，全部用量計落站主條數。前提：呢頁要部署喺 Cloudflare Pages，而且已經加好 Functions 同環境變數（見下面「站主部署」）。未部署好嗰陣，呢個模式會測試失敗，再跌返內置引擎。</div>
+<div class="modeCard" id="modeDirectCard"><b>模式 B · 自己 Key 直連（有貼 Key）</b>貼入你自己嘅 DeepSeek Key，頁面會照舊直接 call api.deepseek.com，用返你自己嘅額度。條 Key 只會留喺你部機今次開啟嘅記憶入面，關頁即清，唔會上傳去其他地方（只會直接 send 去 DeepSeek）。</div>
+</div>
+<p class="note" id="modeNow" style="margin-top:10px">而家模式：伺服器代傳（未貼 Key）</p>
+<div class="field"><label for="apiKey">DeepSeek API Key（可留空 — 留空就用伺服器代傳）</label><input id="apiKey" type="password" placeholder="留空 = 用站主嘅伺服器代傳；貼 sk-… = 用你自己條 Key 直連" autocomplete="off"></div>
+<div class="field"><label for="model">模型</label>
+<select id="model"><option value="deepseek-chat">deepseek-chat（快、平）</option><option value="deepseek-reasoner">deepseek-reasoner（諗得深啲）</option></select></div>
+<div class="field"><button class="btn" id="testApi" type="button">測試連接</button> <span id="apiStatus" class="note"></span></div>
+<div id="apiHelp" class="note hidden" style="margin-top:10px">
+<p style="margin:0 0 6px"><b>「Failed to fetch」係咩意思？</b>即係未連到伺服器就斷咗 — 未去到驗證 Key 嗰一步。直連模式係連唔到 api.deepseek.com；代傳模式係連唔到本站嘅 /api/*（例如未部署好、或者喺 Muse 入面開頁）。逐項試：</p>
+<ul style="margin:0;padding-left:18px">
+<li><b>熄 VPN／廣告攔截再試</b> — VPN、AdGuard、內容攔截器或者瀏覽器嘅攔截擴充功能，會擋走連線，係最常見原因。</li>
+<li><b>換網絡</b> — Wi-Fi 轉流動數據（或者調轉）再㩒多次測試連接。</li>
+<li><b>換環境</b> — 喺 App／Muse 入面開唔到代傳係正常嘅：/api/* 只會喺正式部署去 Cloudflare Pages 之後先存在。要用瀏覽器（Chrome／Safari）開返 pages.dev 嗰條正式網址再試。</li>
+<li><b>核對 Key 同餘額</b> — 直連：去 platform.deepseek.com →「API keys」核對條 Key 有冇貼漏字；帳戶要先充值先用到 API（未充值會顯示「餘額不足」，唔係 Failed to fetch）。代傳：核對 Cloudflare 嗰邊嘅 DEEPSEEK_API_KEY 同站主帳戶餘額。</li>
+</ul>
+</div>
+<details style="margin-top:14px">
+<summary>站主部署：Cloudflare Pages Functions（揀咗代傳先要睇）</summary>
+<p class="note">朋友嗰邊咩都唔使做。站主部署嗰陣要做齊呢 3 步，條 Key 先會喺伺服器嗰邊生效，又唔會出現喺頁面度：</p>
+<ol class="deploySteps">
+<li><b>放 Functions 檔案</b> — 喺網站根目錄（同 index.html 同一層）加兩個檔案：<b>functions/api/chat.js</b> 同 <b>functions/api/balance.js</b>，內容用下面兩段。唔好將條 Key 寫入呢兩個檔案或者 index.html。</li>
+<li><b>設定環境變數</b> — Cloudflare Dashboard → 你個 Pages 項目 → Settings → Environment variables → Production 加一條 <b>DEEPSEEK_API_KEY</b>，值係你自己條 DeepSeek Key，㩒 Encrypt／Secret。</li>
+<li><b>重新部署</b> — 加完環境變數要 Redeploy 一次先生效。之後朋友開 pages.dev 網址，唔貼 Key 都會自動行代傳。留意：有條 link 嘅人就用到站主額度，記得去 DeepSeek 後台睇住餘額同用量。</li>
+</ol>
+<p class="note" style="margin-top:10px"><b>functions/api/chat.js</b>（POST /api/chat — 將頁面傳嚟嘅 body 原封轉去 DeepSeek chat completions）</p>
+<pre>export async function onRequestPost(context) {
+  const apiKey = context.env.DEEPSEEK_API_KEY;
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: { message: "DEEPSEEK_API_KEY 未設定" } }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
+  const body = await context.request.text();
+  const res = await fetch("https://api.deepseek.com/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + apiKey },
+    body: body
+  });
+  return new Response(res.body, { status: res.status, headers: { "Content-Type": res.headers.get("Content-Type") || "application/json" } });
+}</pre>
+<p class="note"><b>functions/api/balance.js</b>（GET /api/balance — 用站主條 Key 查餘額）</p>
+<pre>export async function onRequestGet(context) {
+  const apiKey = context.env.DEEPSEEK_API_KEY;
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: { message: "DEEPSEEK_API_KEY 未設定" } }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
+  const res = await fetch("https://api.deepseek.com/user/balance", {
+    headers: { "Authorization": "Bearer " + apiKey }
+  });
+  return new Response(res.body, { status: res.status, headers: { "Content-Type": res.headers.get("Content-Type") || "application/json" } });
+}</pre>
+</details>
+</details>
+
+<details>
+<summary>角色同世界（你今局嘅設定）</summary>
+<p class="note" id="worldNote">未揀身份之前，呢度會係空白。揀完身份開始之後，你嘅白天／夜晚身份、目標同性格路線會寫喺度，成局都跟住呢個設定走。㩒「改身份 / 重新開始」可以換另一個身份重玩。</p>
+</details>
+
+<footer>只俾朋友小圈子玩 · 每局開頭要先揀身份 · 進度只留喺今次開啟，重新整理就會返去身份設定由 P.001 重新開始</footer>
+</div>
+
+<script>
+var S = { page:1, scene:"東京合租公寓・你的房間（星期一早上）", pop:"查無此人", popScore:0, money:420, wealth:"勉強餬口", body:"健康", fans:12, members:8, day:"星期一", dayNum:1, dayIdx:0, flags:{coachDeal:false, roommateBond:false}};
+var DAYS = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+function dayLabel(){ return "第 "+S.dayNum+" 日 · "+S.day; }
+function advanceDay(){ S.dayIdx=(S.dayIdx+1)%7; S.dayNum++; S.day=DAYS[S.dayIdx]; }
+var historyLog = [];
+var ID = null; // 玩家開局揀嘅身份，開始前係 null
+var PRESETS = [
+ {name:"櫻子", alias:"大櫻", from:"台灣", city:"東京 · 合租公寓", job:"中學體育老師", night:"X＋Telegram 檔案庫創作者", goal:"賺錢為將來鋪路", money:420, trait:"大膽進取"},
+ {name:"小夜", alias:"小夜", from:"台灣", city:"東京 · 一人公寓", job:"OL 上班族", night:"直播主", goal:"存錢／還債", money:120, trait:"搞笑親民"},
+ {name:"阿莓", alias:"阿莓", from:"香港", city:"東京 · 合租公寓", job:"留學生（兼職打工）", night:"舞蹈／短片創作者", goal:"紅遍全網，衝人氣", money:120, trait:"大膽進取"}
+];
+function $(id){return document.getElementById(id);}
+function selectTrait(name){
+ document.querySelectorAll('.trait').forEach(function(el){ el.classList.toggle('sel', el.getAttribute('data-trait')===name); });
+}
+function applyPreset(i){
+ var p=PRESETS[i]; if(!p) return;
+ document.querySelectorAll('.preset').forEach(function(el){ el.classList.toggle('sel', +el.getAttribute('data-preset')===i); });
+ $('fName').value=p.name; $('fAlias').value=p.alias; $('fFrom').value=p.from; $('fCity').value=p.city; $('fJob').value=p.job; $('fNight').value=p.night; $('fGoal').value=p.goal; $('fMoney').value=String(p.money);
+ selectTrait(p.trait);
+}
+document.querySelectorAll('.preset').forEach(function(el){ el.addEventListener('click',function(){ applyPreset(+el.getAttribute('data-preset')); }); });
+document.querySelectorAll('.trait').forEach(function(el){ el.addEventListener('click',function(){ document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('sel')}); selectTrait(el.getAttribute('data-trait')); }); });
+['fName','fAlias','fFrom','fCity','fJob','fNight','fGoal'].forEach(function(id){ $(id).addEventListener('change',function(){ document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('sel')}); }); });
+function currentTrait(){ var el=document.querySelector('.trait.sel'); return el?{name:el.getAttribute('data-trait'), pop:+el.getAttribute('data-pop')||0}:{name:"大膽進取",pop:6}; }
+function identityText(){ if(!ID) return ''; return ID.name+'（網名「'+ID.alias+'」），來自'+ID.from+'，住喺'+ID.city+'，白天係'+ID.job+'，夜晚係'+ID.night+'，性格路線：'+ID.trait+'，目標：'+ID.goal+(ID.custom?'；補充：'+ID.custom:''); }
+function startGame(){
+ var name=$('fName').value.trim(), alias=$('fAlias').value.trim();
+ if(!name||!alias){ $('setupErr').textContent='要填返你嘅名同夜晚網名先開始到（㩒上面預設身份可以一鍵填好）。'; return; }
+ $('setupErr').textContent='';
+ var tr=currentTrait();
+ ID={name:name, alias:alias, from:$('fFrom').value, city:$('fCity').value, job:$('fJob').value, night:$('fNight').value, goal:$('fGoal').value, trait:tr.name, custom:$('fCustom').value.trim()};
+ S={page:1, scene:ID.city+'・你的房間（星期一早上）', pop:"查無此人", popScore:tr.pop, money:+$('fMoney').value, wealth:"勉強餬口", body:"健康", fans:12+tr.pop*4, members:8, day:"星期一", dayNum:1, dayIdx:0, flags:{coachDeal:false, roommateBond:false}};
+ S.pop=popLabel(S.popScore); S.wealth=wealthLabel(S.money);
+ historyLog=[];
+ $('setupBox').classList.add('hidden'); $('gameArea').classList.remove('hidden');
+ $('headerSub').textContent=ID.city.split(' · ')[0]+' · 白天係'+ID.job+'，夜晚係「'+ID.alias+'」。揀又得，自己打字都得。';
+ $('idCard').innerHTML='<strong>你今局嘅身份：'+escapeHtml(ID.name)+' · 「'+escapeHtml(ID.alias)+'」</strong><br>來自'+escapeHtml(ID.from)+' · '+escapeHtml(ID.city)+'<br>白天：'+escapeHtml(ID.job)+'　｜　夜晚：'+escapeHtml(ID.night)+'<br>性格：'+escapeHtml(ID.trait)+'　｜　目標：'+escapeHtml(ID.goal)+(ID.custom?'<br>補充：'+escapeHtml(ID.custom):'');
+ $('worldNote').textContent='你係 '+identityText()+'。狀態會隨你嘅選擇變：人氣、錢、身體、頁數都會郁。故事點走，冇標準答案 — 你打咩，佢接咩。';
+ $('story').innerHTML=''; renderStatus();
+ addTurn('', ["星期一早上，你喺"+ID.city+"醒來。窗外有電車聲，手機有 3 個通知：白天份工嘅群組、一個合作邀請、仲有你夜晚帳號嘅課金提示。","白天，你係"+ID.job+"；夜晚，你係「"+ID.alias+"」— "+ID.night+"。你嚟自"+ID.from+"，性格係"+ID.trait+"，今個月嘅目標好清楚："+ID.goal+"。","兩邊嘅人生點樣平衡、啲錢點樣賺、啲人點樣揀 — 全部由你決定。你可以㩒下面嘅選項，亦可以喺輸入框打任何你想做嘅事，寫幾長都得。"]);
+ setChoices(["照常返工／返學，扮冇事","去健身房／搵合作對象傾拍片","睇吓課金榜同群組","留喺房，諗吓呢個月點部署"]);
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resolveVal(v, input){ return typeof v==='function' ? v(input) : v; }
+function cityBase(){ return ID ? ID.city.split(' · ')[0] : '東京'; }
+function roomScene(timeLabel){ return (ID?ID.city:'東京 · 合租公寓')+'・你的房間（'+timeLabel+'）'; }
+
+/* 白天返工場景：按玩家身份（職業）分版，唔再一律寫死做老師 */
+function workSceneData(){
+ var job = ID ? ID.job : '';
+ var alias = ID ? ID.alias : '';
+ if(/老師/.test(job)){
+  return { scene: cityBase()+'・學校（日間）', dMoney:0, dPop:3,
+   text:["你返學教體育。倉庫、操場、陽光 — 同夜晚嘅你係兩個世界。學生跑圈嗰陣，你企喺場邊計時，邊個偷懶、邊個搏命，你一眼就睇得出嚟。",
+         "有學生問你放假去邊玩，你笑笑口答：「瞓覺。」冇人知你夜晚嘅另一面。呢種反差，正係你帳號最吸引人嘅地方 — 但亦都係你守得最緊嘅秘密。"],
+   choices:["放學返屋企","喺體育倉庫影張相","同同事食晏","睇吓群組反應"]};
+ }
+ if(/OL|上班族/.test(job)){
+  return { scene: cityBase()+'・公司（日間）', dMoney:100, dPop:2,
+   text:["你返公司開會。投影片、會議室、即溶咖啡 — 你企喺白板前面報告嗰陣，邊個會諗到，夜晚開直播嗰個「"+alias+"」，就係企喺度嘅你。",
+         "晏晝同同事食飯，佢哋講緊邊個網紅又出咗事，你低頭食飯，笑笑口唔出聲。白天嘅你越普通，夜晚嘅你就越安全。"],
+   choices:["放工返屋企","同同事食晏","加班前睇吓群組","返屋企開直播"]};
+ }
+ if(/留學生/.test(job)){
+  return { scene: cityBase()+'・大學校園（日間）', dMoney:50, dPop:2,
+   text:["你返學上堂。講堂、外語筆記、打工更表 — 你一邊抄筆記，一邊計今個月仲差幾多先交到租。留學生活冇想像中浪漫，大部分時間都係錢同時間嘅拉鋸。",
+         "落堂之後你去打工，企足成晚。攰係攰，但你知自己為咩而嚟 — 夜晚拍嗰幾條片，可能就係你下個月嘅轉機。"],
+   choices:["落堂去便利店打工","返宿舍休息","同同學食晏","返去拍條舞片"]};
+ }
+ if(/護士/.test(job)){
+  return { scene: cityBase()+'・醫院（日間）', dMoney:100, dPop:2,
+   text:["你返醫院返工。病房、走廊、消毒水味 — 你推住車逐間房行，邊個要換藥、邊個要人陪住講兩句，你都記得清清楚楚。",
+         "夜晚嗰個你幾咁放都好，白天企喺病人面前，你係最穩陣嗰個。呢份反差，你唔打算俾任何人知。"],
+   choices:["放工返屋企","同同事食宵夜","返屋企休息","睇吓群組反應"]};
+ }
+ if(/健身教練/.test(job)){
+  return { scene: cityBase()+'・健身室（日間 · 返工）', dMoney:120, dPop:2,
+   text:["你返健身室開工 — 不過今次你企喺教練嗰邊。帶會員做組數、執動作、計飲食，你講嘅每一句都係專業口吻。",
+         "有會員問你有冇玩開社交平台，你笑笑口話：「有呀，不過好悶㗎。」悶唔悶，你自己知就得。"],
+   choices:["收工去健身房搵教練拍片","同同事食晏","返屋企開直播","返房休息"]};
+ }
+ if(/便利店|餐飲|店員/.test(job)){
+  return { scene: cityBase()+'・店舖（日間 · 返工）', dMoney:60, dPop:1,
+   text:["你返店舖工。收銀、補貨、招呼客人 —企足成日，腰都直唔返。店長心情好嗰日會請飲嘢，心情差嗰日就咩都鬧一餐。",
+         "你一邊掃貨一邊諗：夜晚帳號賺到嘅一晚，可能已經多過呢度企成個星期。咁諗住，腳都冇咁攰。"],
+   choices:["放工返屋企","去便利店買宵夜俾自己","同同事食晏","返屋企休息"]};
+ }
+ if(/自由工作者/.test(job)){
+  return { scene: cityBase()+'・屋企（日間 · 接案）', dMoney:70, dPop:1,
+   text:["你喺屋企開工。接案、改稿、追數 — 自由工作者嘅「自由」，一半係真，一半係冇人管你幾時瞓。",
+         "做到悶，你企起身沖杯咖啡，望吓窗外。白天同夜晚嘅界線喺你身上最模糊，所以你更加要自己定規矩。"],
+   choices:["出街行吓抖吓","開直播同粉絲傾偈","返房休息","睇吓課金榜"]};
+ }
+ return { scene: cityBase()+'（日間 · 返工）', dMoney:50, dPop:2,
+  text:["你照常返去做白天份工："+job+"。忙起上嚟咩都唔記得，停低嗰陣，先諗起夜晚嗰個自己。",
+        "兩邊嘅人生就係咁輪住轉 — 守得住白天，先有資格玩夜晚。"],
+  choices:["放工返屋企","同同事食晏","返房休息","睇吓群組反應"]};
+}
+
+var SCENES = [
+/* ── 新場景 1：直播 ── */
+{ test:function(t){return /直播|開播|live/.test(t)},
+  text:["你開咗直播。補光燈一亮，鏡頭入面嘅你同白天判若兩人 — 你逐個同粉絲打招呼，讀留言，笑住接住每一句撩你嘅說話，又識得喺最啱嘅位停一停，吊住佢哋胃口。",
+        "打賞提示一路跳，熟悉嘅名字排住隊出現。你記低邊個最肯課、邊個淨係出聲唔出錢，落播之後先慢慢部署。呢一晚，數字升得幾靚。"],
+  dMoney:120, dPop:9, scene:function(){return roomScene('夜晚 · 直播完');},
+  choices:["落播之後覆吓粉絲私訊","睇吓課金榜","再出多個帖預告下次直播","瞓覺，聽朝再算"]},
+/* ── 新場景 2：粉絲私訊／金主 ── */
+{ test:function(t){return /私訊|覆.*訊息|粉絲訊息|金主|粉絲傾|dm/.test(t)},
+  text:["你逐個覆粉絲私訊。大部分係閒聊同讚美，你笑笑口應付；其中一個講嘢特別有分寸，從來唔催相，只係每次出新內容都準時課金，仲會認真留言講邊一段拍得好。",
+        "你同佢傾多咗幾句，先明有錢嗰啲唔一定最麻煩 — 最值錢嘅關係，往往係慢慢養出嚟嘅信任。你冇答應任何線下見面，只係留低一個伏筆：下次有特別企劃，第一個話佢知。"],
+  dMoney:60, dPop:5, scene:null,
+  choices:["喺群組出個新遊戲炒熱氣氛","睇吓課金榜","開直播同粉絲傾偈","返房休息"]},
+/* ── 新場景 3：室友日常（旗標 roommateBond：熟咗之後有後續版） ── */
+{ test:function(t){return /室友|客廳|合租/.test(t)},
+  text:function(){ if(S.flags.roommateBond){
+    return ["自從上次傾開咗，室友之間冇咁生外。今晚有人買多咗餸，順手煮埋你嗰份；你食完主動洗碗，仲傾到最近各自嘅近況 — 講到邊啲就邊啲，唔使交代晒。",
+            "合租最難得嘅，係有分寸嘅親近。你開始覺得，呢間屋除咗平租，仲有少少屋企嘅感覺。"];
+   }
+   return ["返到合租公寓，客廳有人喺度煮麵，電視播住唔知咩節目。你哋平時各有各忙，見面通常只係點頭 — 但今晚唔知點解傾多咗幾句：邊個沖涼最耐、雪櫃邊格係邊個、邊日一齊去入貨。",
+           "呢啲芝麻綠豆嘅相處，反而令你安心。夜晚嗰個你幾咁大膽都好，返到嚟呢度，你只係一個普通室友。呢層關係，值得好好守住。"];},
+  dMoney:0, dPop:2, scene:function(){return (ID?ID.city:'東京 · 合租公寓')+'・客廳（夜晚）';}, setRoommate:true,
+  choices:["同室友傾多陣先返房","返房休息","瞓覺，聽朝再算","睇吓群組反應"]},
+/* ── 新場景 4：同事／上司社交（身份危機感） ── */
+{ test:function(t){return /同事|上司|老闆|飯局|應酬|食晏|聚餐/.test(t)},
+  text:["你同同事食晏／應酬。席間有人講起最近網上好紅嘅創作者，仲拎部手機出嚟想俾大家睇 — 你心跳快咗半拍，面上仲要保持平常，笑笑口轉開話題，講返工作同放假去邊玩。",
+        "返到座位，你先發現手心有汗。白天同夜晚之間嗰道牆，平時睇唔到，一有人行近，先知佢有幾薄。你提醒自己：低調，唔係因為驚，係因為你想自己揀，幾時俾邊個知。"],
+  dMoney:-20, dPop:1, scene:null,
+  choices:["照常返工／返學，扮冇事","返屋企休息","同同事講下次再聚","返房休息"]},
+/* ── 原有場景：健身房（旗標 coachDeal：傾成合作之後有後續版＋加碼） ── */
+{ test:function(t){return /健身|教練|kaito|深蹲|重訓/.test(t)},
+  text:function(){ if(S.flags.coachDeal){
+    return ["又嚟到 KaitoFit — 自從上次傾成每星期拍一次，教練已經留定機位同燈俾你。今日拍攝順好多：佢識得就你角度，你識得接佢啲搞笑位，成條片一次過搞掂。",
+            "數據證明呢個合作係啱嘅：佢嘅客多咗，你嘅粉又升。落場之後佢請你飲嘢，話下個月如果數據再升，可以傾加碼。你笑住應承，心入面已經計緊數。"];
+   }
+   return ["你去到 KaitoFit。教練熱心又搞笑，練得好大隻，傾咗陣就開機拍片：深蹲、弓箭步、核心，再加個挑戰賽。",
+           "過程有玩有笑，最後平分秋色 — 你多年鍛鍊冇白費。教練話你有潛質，提出每星期拍一次，300 USDT 一次，冇合約，每月睇數據檢討。你應承咗：幫佢宣傳、幫自己宣傳，又為將來鋪路。"];},
+  dMoney:function(){return S.flags.coachDeal?350:300;}, dPop:8, scene:"東京・KaitoFit 健身房（夜晚）", setCoach:true,
+  choices:["返屋企休息","同教練傾下星期拍咩","影張相放上 X","睇吓課金榜"]},
+/* ── 原有場景：返工／返學（按身份分版，見 workSceneData） ── */
+{ test:function(t){return /返工|返學|返公司|返校|學校|體育倉|上堂|教書|上班|打工/.test(t)},
+  text:function(){return workSceneData().text;},
+  dMoney:function(){return workSceneData().dMoney;}, dPop:function(){return workSceneData().dPop;},
+  scene:function(){return workSceneData().scene;},
+  choices:function(){return workSceneData().choices;} },
+/* ── 原有場景：課金榜（金額隨人氣升，唔再寫死） ── */
+{ test:function(t){return /課金|榜|usdt/.test(t)},
+  text:function(){ var top=180+S.popScore*2, second=Math.round(top*0.66), third=Math.round(top*0.44);
+   return ["你打開課金榜（"+dayLabel()+"更新）：",
+           "\n第 1 名："+top+" USDT\n第 2 名："+second+" USDT\n第 3 名："+third+" USDT\n（只公布金額，唔公布名字）",
+           "頭名依然係嗰位元祖粉絲。個榜仲有兩日，你諗緊點樣再炒熱個群。"];},
+  dMoney:40, dPop:4, scene:null,
+  choices:["喺群組出個新遊戲炒熱氣氛","放張新相上 X","返房休息","諗吓下一個合作對象"]},
+/* ── 新場景 5：舞蹈／拍舞片 ── */
+{ test:function(t){return /舞蹈|跳舞|舞室|排舞|拍.*舞/.test(t)},
+  text:["你去咗舞室。鏡牆、木地板、音樂一開，成個人即刻入咗狀態 — 一段舞排咗幾次，邊個位轉身、邊個位定格，你逐格執到順晒先開機拍。",
+        "拍出嚟嘅片同平時嘅相好唔同：有節奏、有汗、有力量感。留言區好多人話第一次見你呢一面。人氣呢家嘢，有時就係靠一啲意想不到嘅反差。"],
+  dMoney:50, dPop:8, scene:function(){return cityBase()+'・舞室（夜晚）';},
+  choices:["放條舞片上 X","返屋企休息","同舞蹈老師傾下次合作","睇吓課金榜"]},
+/* ── 新場景 6：放假外出／旅行 ── */
+{ test:function(t){return /旅行|出街|逛街|行街|溫泉|海邊|郊遊|放假/.test(t)},
+  text:["你俾自己放一日假，出咗去行吓。冇開直播，冇影相任務，純粹行街、食嘢、望吓呢個城市 — 電車、橫巷、便利店門口嘅光，全部都係你當初嚟呢度嘅原因。",
+        "玩咗大半日，先發現自己笑多咗。賺錢要緊，但人都要叉電嘅。返到屋企，你覺得聽日可以再搏過。"],
+  dMoney:-60, dPop:1, body:"健康", scene:function(){return cityBase()+'・街上（日間）';},
+  choices:["返屋企休息","影張旅行相放上 X","瞓覺，聽朝再算","諗吓呢個月嘅目標"]},
+/* ── 新場景 7：深夜便利店／宵夜 ── */
+{ test:function(t){return /宵夜|夜市|買嘢食/.test(t)||(/便利店/.test(t)&&!/打工|返工/.test(t))},
+  text:["深夜落街去便利店。夜晚嘅街道靜好多，店入面得返店員同幾個夜歸人。你買咗熱飲同少少宵夜，企喺門口食咗陣，望住路上偶爾經過嘅的士。",
+        "呢種冇人識你、唔使表演嘅時刻，先係最奢侈嘅休息。你慢慢行返屋企，聽日嘅事，聽日先算。"],
+  dMoney:-15, dPop:0, scene:function(){return cityBase()+'・便利店（深夜）';},
+  choices:["返房休息","瞓覺，聽朝再算","返去同室友傾吓偈","睇吓課金榜"]},
+/* ── 原有場景：群組／X 出帖 ── */
+{ test:function(t){return /群組|telegram|粉絲|發帖|出帖|相|po/.test(t)},
+  text:["你喺群組同 X 放咗新內容。留言即刻湧入：",
+        "\n🔥🔥🔥\n「姐姐今日狀態好好！」\n「課金了課金了！」",
+        "人數慢慢升，課金跟住升。做內容冇捷徑，就係密密出、密密互動。"],
+  dMoney:90, dPop:10, scene:null,
+  choices:["再出多個帖","睇吓課金榜","同粉絲傾吓偈","收工休息"]},
+/* ── 原有場景拆分 A：瞓覺 — 唯一會進一日嘅場景 ── */
+{ test:function(t){return /瞓覺|睡覺|上床瞓|入睡|瞓落床/.test(t)}, sleep:true,
+  text:function(){ return ["你沖完涼，瞓落床。手機較咗靜音，群組嘅紅點由佢閃 — 今晚邊個課金、邊個留言，都等聽朝先算。",
+        "瞓醒已經係"+S.day+"，即係"+dayLabel()+"。窗外嘅光同琴日有少少唔同，你伸個懶腰：日子就係咁，一瞓醒，就真係過咗一日。"];},
+  dMoney:0, dPop:0, body:"健康", scene:function(){return roomScene(S.day+'早上');},
+  choices:["照常返工／返學，扮冇事","睇吓課金榜同群組","開直播同粉絲傾偈","諗吓今日點部署"]},
+/* ── 原有場景拆分 B：普通休息 — 唔進一日 ── */
+{ test:function(t){return /休息|瞓|訓|返屋企|早抖|返房|沖涼/.test(t)},
+  text:function(){ return ["你返到房，沖涼，攤喺床上面抖吓。冇開直播，冇覆訊息，就係俾自己停一停。",
+        "休息唔等於過咗一日 — 而家仲係"+dayLabel()+"。等你真係瞓覺瞓醒，先會去到下一日。你諗吓，陣間仲做唔做多陣嘢好。"];},
+  dMoney:0, dPop:0, body:"健康", scene:function(){return roomScene('夜晚');},
+  choices:["瞓覺，聽朝再算","瞓之前睇吓課金榜","覆吓粉絲訊息","開直播同粉絲傾偈"]}
+];
+var FALLBACKS = [
+["你照住自己嘅諗法做咗落去。件事唔算大，但一步一步，東京嘅日子就係咁累積出嚟 — 有啲嘢試咗先知，有啲人遇咗先明。","手機震一震，群組又有新訊息。你望一望，笑咗笑。"],
+["你嘅行動改變咗少少局面。唔係戲劇性嗰種改變，而係好似水位咁，靜靜升咗一格。","你記低咗今日嘅收支同心情，準備下一步。"],
+["做完，你停一停，諗吓值唔值得。你嘅原則好簡單：唔傷害自己，唔呃人，開心同有錢賺就繼續。","夜色落嚟，合租公寓嘅燈逐盞熄。"]
+];
+
+function wealthLabel(m){ return m<800?"勉強餬口":m<2500?"手頭鬆動":m<6000?"小有積蓄":"衣食無憂";}
+function popLabel(s){ return s<15?"查無此人":s<40?"底層透明":s<90?"小有名氣":s<180?"圈內紅人":"話題女王";}
+
+function renderStatus(){
+document.getElementById('status').innerHTML =
+(ID?'<span class="chip">身份 <strong>'+escapeHtml(ID.alias)+'</strong> · '+escapeHtml(ID.job)+'</span>':'')+
+'<span class="chip">頁數 <strong>P.'+String(S.page).padStart(3,'0')+'</strong></span>'+
+'<span class="chip">日子 <strong>'+dayLabel()+'</strong></span>'+
+'<span class="chip">場景 '+S.scene+'</span>'+
+(S.flags&&S.flags.coachDeal?'<span class="chip">合作 <strong>健身房定期合作</strong></span>':'')+
+(S.flags&&S.flags.roommateBond?'<span class="chip">室友 <strong>已經熟絡</strong></span>':'')+
+'<span class="chip">人氣 <strong>'+S.pop+'</strong> · X粉絲 '+S.fans+'</span>'+
+'<span class="chip">財富 <strong>'+S.wealth+'</strong> · '+S.money+' USDT</span>'+
+'<span class="chip">身體 <strong>'+S.body+'</strong></span>'+
+'<div style="flex-basis:100%"><div class="bar"><i style="width:'+Math.min(100,S.popScore)+'%"></i></div></div>';
+}
+function addTurn(playerText, paras, chat){
+var story=document.getElementById('story');
+var div=document.createElement('div'); div.className='turn';
+var html='';
+if(playerText) html+='<div class="player">'+escapeHtml(playerText)+'</div>';
+html+='<div class="narr">'+paras.map(function(p){return '<p>'+escapeHtml(p)+'</p>'}).join('')+'</div>';
+if(chat) html+='<div class="chatbox">'+escapeHtml(chat)+'</div>';
+html+='<div class="meta">❖ P.'+String(S.page).padStart(3,'0')+' | '+dayLabel()+' | 當前場景：'+S.scene+'\n❖ 帳號人氣：'+S.pop+'\n❖ 財富狀態：'+S.wealth+'\n❖ 身體狀態：'+S.body+'</div>';
+div.innerHTML=html; story.appendChild(div);
+historyLog.push({player:playerText||'', paras:paras});
+div.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function setChoices(list){
+var box=document.getElementById('choices'); box.innerHTML='';
+list.forEach(function(c,i){
+var b=document.createElement('button'); b.className='choice'; b.type='button';
+b.innerHTML='<span class="k">'+'ABCD'[i]+'</span><span>'+escapeHtml(c)+'</span>';
+b.addEventListener('click',function(){ takeTurn(c);});
+box.appendChild(b);
+});
+}
+function applyDelta(d){
+if(d.dMoney) S.money+=d.dMoney;
+if(S.money<0) S.money=0;
+if(d.dPop){ S.popScore+=d.dPop; if(S.popScore<0)S.popScore=0; S.fans+=d.dPop*7; S.members+=Math.round(d.dPop/3);}
+if(d.scene) S.scene=d.scene;
+if(d.body) S.body=d.body;
+S.pop=popLabel(S.popScore); S.wealth=wealthLabel(S.money);
+}
+function localTurn(input){
+var low=input.toLowerCase();
+for(var i=0;i<SCENES.length;i++){ if(SCENES[i].test(low)){ var sc=SCENES[i];
+ if(sc.sleep) advanceDay();
+ var paras=resolveVal(sc.text,input), ch=resolveVal(sc.choices,input);
+ applyDelta({dMoney:resolveVal(sc.dMoney,input), dPop:resolveVal(sc.dPop,input), scene:resolveVal(sc.scene,input), body:resolveVal(sc.body,input)});
+ if(sc.setCoach) S.flags.coachDeal=true;
+ if(sc.setRoommate) S.flags.roommateBond=true;
+ S.page++; renderStatus(); addTurn(input, paras); setChoices(ch); return;}}
+var f=FALLBACKS[Math.floor(Math.random()*FALLBACKS.length)];
+applyDelta({dMoney:Math.floor(Math.random()*30), dPop:2});
+S.page++; renderStatus(); addTurn(input, f); setChoices(["照常返工／返學","開直播同粉絲傾偈","去健身房拍片","瞓覺，聽朝再算"]);
+}
+
+function systemPrompt(){ return "你係一個廣東話互動小說模擬器主持，繁體字、廣東話口語。玩家今局身份係："+identityText()+"。成局都要跟呢個身份寫，唔好自動變返做大櫻／體育老師，除非玩家身份本身就係嗰個。而家係"+dayLabel()+"；日子只有喺玩家瞓覺之後先會過一日，其他情節唔好亂咁跳日。已知旗標：健身房定期合作＝"+(S.flags&&S.flags.coachDeal?"已傾成":"未傾成")+"；同室友關係＝"+(S.flags&&S.flags.roommateBond?"已熟絡":"仲生外")+"，寫落去嗰陣要跟返呢啲狀態，唔好寫到矛盾。你要：1) 用展開、豐富嘅描寫接住玩家剛才寫嘅行動，唔好只係改寫佢嗰句；2) 寫完一段故事；3) 最尾用呢個格式俾狀態同選項：\n---\n❖ P.頁數 | 當前場景：…\n❖ 帳號人氣：…\n❖ 財富狀態：…\n❖ 身體狀態：…\n---\n下一步？\nA. …\nB. …\nC. …\nD. …\n內容保持成年人之間自願、合法嘅情節，避免露骨器官描寫同非自願情節。"; }
+var SYSTEM_PROMPT=""; // 已改用 systemPrompt() 按玩家身份即時生成
+
+/* 雙模式：有貼 Key = 直連 api.deepseek.com；冇貼 Key = 伺服器代傳（相對路徑 /api/*，Key 喺 Cloudflare 嗰邊） */
+function currentKey(){ return document.getElementById('apiKey').value.trim(); }
+function isProxyMode(){ return !currentKey(); }
+function chatRequest(payload, timeoutMs){
+ var key=currentKey();
+ if(key){
+  return fetchTimeout('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify(payload)},timeoutMs||60000);
+ }
+ return fetchTimeout('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)},timeoutMs||60000);
+}
+function balanceRequest(timeoutMs){
+ var key=currentKey();
+ if(key){
+  return fetchTimeout('https://api.deepseek.com/user/balance',{headers:{'Authorization':'Bearer '+key}},timeoutMs||20000);
+ }
+ return fetchTimeout('/api/balance',{method:'GET'},timeoutMs||20000);
+}
+function updateModeUI(){
+ var proxy=isProxyMode();
+ var now=document.getElementById('modeNow');
+ if(now) now.textContent = proxy ? '而家模式：伺服器代傳（未貼 Key）— 會行 /api/chat 同 /api/balance，費用計落站主條數。' : '而家模式：自己 Key 直連（已貼 Key）— 直接連 api.deepseek.com，用你自己嘅額度。';
+ var pc=document.getElementById('modeProxyCard'), dc=document.getElementById('modeDirectCard');
+ if(pc) pc.classList.toggle('on', proxy);
+ if(dc) dc.classList.toggle('on', !proxy);
+}
+function aiTurn(input){
+var proxy=isProxyMode();
+var story=document.getElementById('story');
+var t=document.createElement('div'); t.className='typing'; t.textContent=proxy?'AI 諗緊…（伺服器代傳）':'AI 諗緊…'; story.appendChild(t); t.scrollIntoView({behavior:'smooth'});
+var msgs=[{role:'system',content:systemPrompt()}];
+historyLog.slice(-6).forEach(function(h){ if(h.player) msgs.push({role:'user',content:h.player}); msgs.push({role:'assistant',content:h.paras.join('\n')});});
+msgs.push({role:'user',content:input+'（目前：P.'+S.page+'，'+dayLabel()+'，'+S.scene+'，'+S.money+' USDT，人氣'+S.pop+'）'});
+chatRequest({model:document.getElementById('model').value,messages:msgs,temperature:0.9},60000)
+.then(function(r){ if(!r.ok){ return r.text().then(function(b){ throw serverErrForMode(r.status,b,proxy); }); } if(proxy&&/text\/html/.test(r.headers.get('Content-Type')||'')){ throw serverErrForMode(404,'{}',true); } return r.json().catch(function(){ if(proxy) throw serverErrForMode(404,'{}',true); throw new Error('AI 回應格式唔啱'); }); })
+.then(function(j){
+t.remove();
+var txt=j.choices[0].message.content;
+var parts=txt.split(/下一步[？?]/);
+var body=(parts[0]||txt).replace(/---[\s\S]*?---/,'').trim();
+var opts=[];
+var m; var re=/^[ABCD][\.、]\s*(.+)$/gm;
+while((m=re.exec(txt))!==null) opts.push(m[1].trim());
+if(/瞓覺|睡覺|入睡|上床瞓/.test(input)) advanceDay();
+S.page++; S.money+=Math.floor(Math.random()*40); S.popScore+=3; S.pop=popLabel(S.popScore); S.wealth=wealthLabel(S.money); renderStatus();
+addTurn(input, body.split(/\n{2,}/).filter(Boolean));
+setChoices(opts.length>=3?opts.slice(0,4):["返學","去健身房拍片","睇吓課金榜","返房休息"]);
+})
+.catch(function(e){ t.textContent='AI 連接失敗（'+(e&&e.server?e.message:netErrTextForMode(e,proxy))+'），已改用內置引擎繼續。'; localTurn(input);});
+}
+function takeTurn(text){ if(!text.trim()) return; aiTurn(text.trim());}
+
+document.getElementById('freeForm').addEventListener('submit',function(e){ e.preventDefault(); var v=document.getElementById('freeInput').value; document.getElementById('freeInput').value=''; takeTurn(v);});
+document.getElementById('freeInput').addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); document.getElementById('freeForm').requestSubmit();}});
+document.getElementById('restartBtn').addEventListener('click',function(){ ID=null; historyLog=[]; document.getElementById('story').innerHTML=''; document.getElementById('choices').innerHTML=''; document.getElementById('gameArea').classList.add('hidden'); document.getElementById('setupBox').classList.remove('hidden'); document.getElementById('headerSub').textContent='第一步：揀你嘅身份設定。揀完先入故事 — 你係邊個，成個故事就點走。'; window.scrollTo({top:0,behavior:'smooth'}); });
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('copyBtn').addEventListener('click',function(){
+var txt=historyLog.map(function(h){return (h.player?'你：'+h.player+'\n':'')+h.paras.join('\n')}).join('\n\n');
+if(navigator.clipboard) navigator.clipboard.writeText(txt); this.textContent='已複製 ✓'; var b=this; setTimeout(function(){b.textContent='複製目前進度文字'},1500);
+});
+/* 連線診斷：分清「未連到伺服器（Failed to fetch）」同「伺服器拒絕（Key／餘額）」兩種失敗 */
+function fetchTimeout(url, opts, ms){
+ var ctl=new AbortController(); var to=setTimeout(function(){ctl.abort();}, ms||20000);
+ opts=opts||{}; opts.signal=ctl.signal;
+ return fetch(url, opts).then(function(r){ clearTimeout(to); return r; }, function(e){ clearTimeout(to); throw e; });
+}
+function httpErrText(status, body){
+ var msg=''; try{ var j=JSON.parse(body); msg=(j.error&&j.error.message)||''; }catch(e){}
+ if(status===401) return '條 Key 唔啱或者未生效（HTTP 401）— 去 platform.deepseek.com → API keys 重新建立一條，成串貼返嚟，唔好漏字、唔好有空格。'+(msg?' DeepSeek 原文：'+msg:'');
+ if(status===402) return '帳戶未有可用餘額（HTTP 402）— 條 Key 本身冇問題，去 platform.deepseek.com → Top up 充值（最少 $2 美金）之後就用到。';
+ if(status===429) return '請求太密或者額度用盡（HTTP 429），等一陣再試。';
+ if(status===400) return '請求格式有問題（HTTP 400）。'+(msg?' DeepSeek 原文：'+msg:'');
+ return 'HTTP '+status+(msg?'：'+msg:'');
+}
+function netErrText(e){
+ if(e&&e.name==='AbortError') return '連線逾時，等咗好耐都未有回應 — 多數係網絡唔穩，或者俾 VPN／攔截器擋住，睇下面清單逐項試。';
+ return '連唔到 DeepSeek 伺服器（Failed to fetch）— 未去到驗證 Key 嗰一步，通常係 VPN／廣告攔截／網絡擋住咗，睇下面清單逐項試。';
+}
+function serverErr(status, body){ var err=new Error(httpErrText(status, body)); err.server=true; return err; }
+function proxyErrText(status, body){
+ var msg=''; try{ var j=JSON.parse(body); msg=(j.error&&j.error.message)||j.message||''; }catch(e){}
+ if(status===404||status===501) return '伺服器代傳未設定好（HTTP '+status+'）— 呢頁未部署到 Cloudflare Pages，或者未加 functions/api/chat.js 同 functions/api/balance.js。喺 Muse 入面開呢頁係冇 /api/* 嘅，要開正式 pages.dev 網址先試到。';
+ if(status===500&&/DEEPSEEK_API_KEY/.test(msg)) return '伺服器未設定好條 Key（HTTP 500）— 站主要去 Cloudflare Pages → Settings → Environment variables 加 DEEPSEEK_API_KEY，再 Redeploy 一次。頁面本身唔會有嗰條 Key。';
+ if(status===401) return '伺服器嗰邊條 Key 唔啱或者未生效（HTTP 401）— 唔係你貼錯（你冇貼 Key），係站主喺 Cloudflare 設定嘅 DEEPSEEK_API_KEY 有問題，要去 platform.deepseek.com 重新建立再更新環境變數。'+(msg?' DeepSeek 原文：'+msg:'');
+ if(status===402) return '站主帳戶未有可用餘額（HTTP 402）— 代傳用緊站主條 Key，朋友嗰邊唔使充值；站主要去 platform.deepseek.com → Top up 充值之後先用到。';
+ if(status===429) return '請求太密或者站主額度用盡（HTTP 429），等一陣再試。';
+ if(status===400) return '請求格式有問題（HTTP 400）。'+(msg?' DeepSeek 原文：'+msg:'');
+ return 'HTTP '+status+(msg?'：'+msg:'');
+}
+function serverErrForMode(status, body, proxy){ var err=new Error(proxy?proxyErrText(status, body):httpErrText(status, body)); err.server=true; err.status=status; return err; }
+function netErrTextForMode(e, proxy){
+ if(!proxy) return netErrText(e);
+ if(e&&e.name==='AbortError') return '連線逾時，等咗好耐都未有回應 — 多數係網絡唔穩，或者本站代傳未回應，睇下面清單逐項試。';
+ return '連唔到本站嘅伺服器代傳（/api/*）— 如果你喺 Muse 入面或者本機直接開呢個 HTML 檔，/api/* 係唔存在嘅；要部署去 Cloudflare Pages（加好 Functions 同 DEEPSEEK_API_KEY）再開 pages.dev 網址先用到。亦有可能係 VPN／攔截器擋住，睇下面清單逐項試。';
+}
+
+document.getElementById('apiKey').addEventListener('input', updateModeUI);
+document.getElementById('testApi').addEventListener('click',function(){
+var key=currentKey(); var proxy=!key; var st=document.getElementById('apiStatus'); var help=document.getElementById('apiHelp');
+updateModeUI();
+if(key&&!/^sk-\S{10,}$/.test(key)){ st.textContent='條 Key 格式好似唔啱：DeepSeek 嘅 Key 係以「sk-」開頭嘅一長串字，成串貼返嚟（唔好漏字、唔好有空格）再試；或者清走成個格，改用伺服器代傳。'; help.classList.add('hidden'); return;}
+help.classList.add('hidden');
+st.textContent=proxy?'測試中…（伺服器代傳 1/2：經 /api/balance 查站主帳戶餘額）':'測試中…（直連 1/2 連線＋驗證 Key）';
+balanceRequest(20000)
+.then(function(r){ return r.text().then(function(body){ if(!r.ok) throw serverErrForMode(r.status, body, proxy); if(proxy&&/^\s*</.test(body)) throw serverErrForMode(404, '{}', true); var j={}; try{ j=JSON.parse(body); }catch(e){ if(proxy) throw serverErrForMode(404, '{}', true); } return j; }); })
+.then(function(j){
+ if(j&&j.is_available===false){ st.textContent=proxy?'代傳連線同站主條 Key 都冇問題，但站主帳戶未有可用餘額 — 站主要去 platform.deepseek.com → Top up 充值（最少 $2 美金）之後，朋友先用到。':'連線同 Key 都冇問題，但帳戶未有可用餘額 — 去 platform.deepseek.com → Top up 充值（最少 $2 美金）之後就用到。'; return null; }
+ st.textContent=proxy?'測試中…（伺服器代傳 2/2：經 /api/chat 試出 AI 回應）':'測試中…（2/2 試出 AI 回應）';
+ return chatRequest({model:'deepseek-chat',messages:[{role:'user',content:'講一句：連接成功'}],max_tokens:20},30000)
+ .then(function(r){ return r.text().then(function(body){ if(!r.ok) throw serverErrForMode(r.status, body, proxy); if(proxy&&/^\s*</.test(body)) throw serverErrForMode(404, '{}', true); var ok=false; try{ var jj=JSON.parse(body); ok=!!(jj.choices&&jj.choices[0]); }catch(e){} if(!ok&&proxy) throw serverErrForMode(404, '{}', true); if(!ok) throw new Error('AI 回應格式唔啱，未收到正常回應。'); st.textContent=proxy?'連接成功 ✓ 伺服器代傳正常：站主條 Key、餘額同 AI 回應全部正常，之後唔使貼 Key，打字會經 /api/chat 由 AI 回應（費用計落站主條數）。':'連接成功 ✓ Key、餘額同 AI 回應全部正常，之後打字會由 AI 回應。'; }); });
+})
+.catch(function(e){
+ if(e&&e.server){ st.textContent='失敗：'+e.message; if(e.status===404||e.status===501) help.classList.remove('hidden'); }
+ else { st.textContent='失敗：'+netErrTextForMode(e, proxy); help.classList.remove('hidden'); }
+});
+});
+updateModeUI();
+
+// 開局：唔自動入故事 — 一定要先喺身份設定㩒「開始故事」
+// （預設身份「大櫻」已預填，朋友可以一㩒預設／直接開始，亦可以改晒所有欄位）
+</script>
+</body>
+</html>
