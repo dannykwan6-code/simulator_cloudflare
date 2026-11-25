@@ -60,6 +60,9 @@ details summary{cursor:pointer;font-weight:700;min-height:36px}
 .note{font-size:13px;color:var(--muted)}
 .typing{color:var(--muted);font-size:14px;padding:8px 0}
 footer{margin-top:24px;text-align:center;color:var(--muted);font-size:13px}
+.ownerLine{margin:10px 0 4px;text-align:center}
+.ownerToggle{background:none;border:none;padding:4px 6px;font-size:12px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;opacity:.75}
+.ownerToggle:hover{opacity:1}
 .setup{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:16px 0}
 .setup h2{font-family:"Noto Serif TC",serif;font-size:22px;margin:0 0 4px}
 .setup .lead{color:var(--muted);font-size:14px;margin:0 0 16px}
@@ -101,34 +104,43 @@ pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-s
 
 <!-- ① 身份設定：開局必經 -->
 <section class="setup" id="setupBox" aria-label="身份設定">
-<h2>先揀身份，再開始</h2>
-<p class="lead">唔好急住入故事。每位朋友開局都要先定身份：用預設一㩒搞掂，或者逐項自己揀、自己改名都得。身份會寫入狀態欄、開場白，同 AI 回應（有接 Key 嗰陣）。</p>
+<h2>玩家角色卡 · 先填卡，再開始</h2>
+<p class="note" style="font-size:14.5px;line-height:1.9;color:var(--text);background:var(--accent-soft);border-radius:12px;padding:14px 16px;margin:0 0 14px">深夜的X時間線上，預告片的馬賽克邊緣總在閃爍——95%的白嫖黨只會截圖保存，一毛錢都不給。真正的錢藏在Telegram的雙層結構裡：公共水群「全國純愛戰士午夜互助協會」嘴上喊純愛、實則刷屏求資源；私密的付費門檻群「檔案庫」才是無碼完整版與金主紅包的真正出口。妳從零粉絲起步，鏡頭前的生澀張力與鏡頭外的商業算計同等致命。圈內最多五位風格各異的獨立男創作者，會在螢幕內外與妳展開合作與曖昧博弈——關係從確認腳本與尺度邊界開始，卻往往在拍攝的肢體接觸中失控升溫。</p>
+<p class="lead">唔好急住入故事。每位朋友開局都要先填好呢張玩家角色卡：用預設一㩒搞掂，或者逐項自己揀、自己改都得。角色卡會寫入狀態欄、開場白，同 AI 回應（有接 Key 嗰陣）。粉絲由 0 起步，第一篇貼文出街之後，先會有人主動嚟敲門。</p>
+<p class="note" style="margin-bottom:14px">呢個世界由 X 公域釣魚、Telegram 公共吃瓜水群「全國純愛戰士午夜互助協會」同私密付費門檻群「檔案庫」交織而成。呢度 95% 都係白嫖黨，妳由零粉絲起步，靠鏡頭張力同商業算計變現，同圈內最多 5 位風格各異嘅獨立男創作者，喺螢幕內外展開商業合作同曖昧博弈。</p>
 
 <div class="presets" id="presets">
 <button type="button" class="preset sel" data-preset="0"><b>🌸 經典 · 大櫻</b><span>台灣嚟東京嘅體育老師<br>夜晚經營 X＋Telegram「大櫻」</span></button>
-<button type="button" class="preset" data-preset="1"><b>💼 OL · 小夜</b><span>東京上班族 OL，日頭開會<br>夜晚做直播同寫真嘅「小夜」</span></button>
+<button type="button" class="preset" data-preset="1"><b>💼 OL · 小夜</b><span>東京上班族 OL，日頭開會<br>夜晚拍預錄寫真同短片嘅「小夜」</span></button>
 <button type="button" class="preset" data-preset="2"><b>🎓 留學生 · 阿莓</b><span>東京留學生，打工度日<br>夜晚拍舞、拍日常嘅「阿莓」</span></button>
 </div>
 
 <div class="grid2">
+<div class="field"><label for="fRegion">所在地區</label>
+<select id="fRegion"><option selected>中國</option><option>台灣</option><option>日本</option><option>韓國</option></select></div>
+<div class="field"><label for="fCity">居住環境</label>
+<select id="fCity"><option>上海 · 合租公寓</option><option>上海 · 一人公寓</option><option>北京 · 租屋</option><option>成都 · 租屋</option></select></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="fXid">X ID（純字母與數字）</label><input id="fXid" value="sakuradai" placeholder="例如：sakuradai"></div>
+<div class="field"><label for="fAlias">藝名 / 暱稱</label><input id="fAlias" value="大櫻" placeholder="例如：大櫻"></div>
+</div>
+<div class="grid2">
 <div class="field"><label for="fName">你嘅名（真名／點稱呼你）</label><input id="fName" value="櫻子" placeholder="例如：櫻子"></div>
-<div class="field"><label for="fAlias">夜晚網名（粉絲點叫你）</label><input id="fAlias" value="大櫻" placeholder="例如：大櫻"></div>
-</div>
-<div class="grid2">
-<div class="field"><label for="fFrom">你嚟自邊度？</label>
-<select id="fFrom"><option>台灣</option><option>香港</option><option>馬來西亞</option><option>中國內地</option><option>日本本地</option></select></div>
-<div class="field"><label for="fCity">你住喺邊度？</label>
-<select id="fCity"><option>東京 · 合租公寓</option><option>東京 · 一人公寓</option><option>大阪 · 合租公寓</option><option>台北 · 租屋</option><option>香港 · 劏房／租屋</option></select></div>
-</div>
-<div class="grid2">
-<div class="field"><label for="fJob">白天身份／職業</label>
+<div class="field"><label for="fJob">白天身份／職業反差</label>
 <select id="fJob"><option>中學體育老師</option><option>小學老師</option><option>OL 上班族</option><option>健身教練</option><option>護士</option><option>便利店／餐飲店員</option><option>留學生（兼職打工）</option><option>自由工作者</option></select></div>
-<div class="field"><label for="fNight">夜晚身份／點賺外快</label>
-<select id="fNight"><option>X＋Telegram 檔案庫創作者</option><option>直播主</option><option>寫真／影片賣家</option><option>舞蹈／短片創作者</option><option>語音／ASMR 創作者</option></select></div>
 </div>
 <div class="grid2">
+<div class="field"><label for="fBody">身材外貌特徵</label><input id="fBody" value="體育老師底子，身形緊緻有線條" placeholder="例如：骨相清冷、身形緊緻…"></div>
+<div class="field"><label for="fStyle">主打風格（可多選）</label><input id="fStyle" value="純欲 / 反差" placeholder="例如：純欲/反差/BDSM/聲控"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="fMode">偏好模式</label>
+<select id="fMode"><option>平衡</option><option>DIY為主</option><option>合拍為主</option></select></div>
 <div class="field"><label for="fGoal">今個月嘅目標</label>
 <select id="fGoal"><option>賺錢為將來鋪路</option><option>存錢／還債</option><option>紅遍全網，衝人氣</option><option>體驗人生，開心最緊要</option><option>低調賺錢，唔好俾人發現</option></select></div>
+</div>
+<div class="grid2">
 <div class="field"><label for="fMoney">起始資金（USDT）</label>
 <select id="fMoney"><option value="120">120 · 手緊，新手起步</option><option value="420" selected>420 · 勉強餬口（經典）</option><option value="900">900 · 有少少積蓄</option></select></div>
 </div>
@@ -141,7 +153,7 @@ pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-s
 <button type="button" class="trait" data-trait="神秘冷感" data-pop="2"><b>🌙 神秘冷感</b><span>出得少但每張都矜貴</span></button>
 </div></div>
 
-<div class="field"><label for="fCustom">想補充自己嘅設定？（可留空）</label><input id="fCustom" placeholder="例如：同 3 個室友合租、有個健身教練朋友、唔想俾同事發現…"></div>
+<div class="field"><label for="fCustom">其他設定（可補充居住環境、職業反差或特殊癖好，可留空）</label><input id="fCustom" placeholder="例如：同 3 個室友合租、有個健身教練朋友、唔想俾同事發現…"></div>
 
 <div class="setupErr" id="setupErr"></div>
 <button class="startBtn" id="startBtn" type="button">以呢個身份開始故事 →</button>
@@ -155,6 +167,8 @@ pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-s
 <li><b>㩒選項</b> — 每回合有 A / B / C / D，㩒一下就推進劇情。</li>
 <li><b>自己打字</b> — 喺下面個框打你想做嘅嘢（幾長都得），㩒「送出」，故事會照你寫嘅接落去。</li>
 <li><b>日子點計</b> — 只有揀／打「瞓覺」先會過一日，狀態欄會顯示第幾日；普通休息唔會跳日。同健身教練傾成定期合作、同室友熟咗之後，再去同一地方會有唔同發展。</li>
+<li><b>系統指令（唔計時間，打完即刻出介面）</b> — <b>//面板</b> 睇完整角色檔案（連男嘉賓名單）；<b>//查看訂製</b> 睇金主私人訂製；<b>//刪除 @ID</b> 封鎖一位男嘉賓（名單會補位）；<b>//手機</b>／<b>//查看手機</b>／<b>查看手機</b> 睇通知中心；<b>查看X</b> 睇貼文評論區；<b>查看TG</b> 睇 Telegram 雙群。</li>
+<li><b>賺錢鐵律</b> — X 只可以發打碼釣魚預告，無碼完整版要入付費門檻群「檔案庫」先變到錢；直接喺 X 發無碼只會俾白嫖黨存走，仲會俾平台限流（警戒燈號會變紅）。</li>
 <li><b>想接真 AI（方案 2）</b> — 拉到最底「接 AI 設定」：唔貼 Key 嗰陣，呢頁會自動行<b>伺服器代傳</b>（經本站嘅 /api/chat，Key 喺 Cloudflare 嗰邊，唔會出現喺頁面度，費用計落站主條數）；有貼自己條 Key 嗰陣，就直接連去 DeepSeek，用返你自己嘅額度。兩邊都唔通嗰陣先會跌返內置劇情引擎。</li>
 </ul>
 </div>
@@ -178,7 +192,7 @@ pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-s
 </div>
 </div>
 
-<details id="apiBox">
+<details id="apiBox" class="hidden">
 <summary>接 AI 設定（方案 2 · DeepSeek）— 可選</summary>
 <p class="note">呢頁本身係靜態網站，接唔到 Muse 本人（Muse 冇公開 API 俾網站接）。方案 2 係接 DeepSeek：平、回應快，玩法同你而家同 Muse 玩一模一樣。而家有兩個模式，㩒「測試連接」嗰陣會自動跟返你有冇貼 Key 嗰個模式嚟試：</p>
 <div class="modeGrid">
@@ -241,51 +255,91 @@ pre{background:#1c1a17;color:#ece8e1;border-radius:10px;padding:12px 14px;font-s
 </details>
 
 <footer>只俾朋友小圈子玩 · 每局開頭要先揀身份 · 進度只留喺今次開啟，重新整理就會返去身份設定由 P.001 重新開始</footer>
+<p class="ownerLine"><button type="button" id="ownerToggle" class="ownerToggle">站主設定</button></p>
 </div>
 
 <script>
-var S = { page:1, scene:"東京合租公寓・你的房間（星期一早上）", pop:"查無此人", popScore:0, money:420, wealth:"勉強餬口", body:"健康", fans:12, members:8, day:"星期一", dayNum:1, dayIdx:0, flags:{coachDeal:false, roommateBond:false}};
+var S = { page:1, scene:"上海 · 合租公寓・你的房間（星期一早上）", pop:"查無此人", popScore:0, money:420, wealth:"勉強餬口", body:"健康", fans:0, members:0, day:"星期一", dayNum:1, dayIdx:0, lastPostDay:0, activeGuest:null, guests:[], retired:[], anchors:[], mods:[], flags:{coachDeal:false, roommateBond:false, posted:false, pendingRefill:false, banUntil:0, modDays:0}};
 var DAYS = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
 function dayLabel(){ return "第 "+S.dayNum+" 日 · "+S.day; }
-function advanceDay(){ S.dayIdx=(S.dayIdx+1)%7; S.dayNum++; S.day=DAYS[S.dayIdx]; }
+function advanceDay(){ S.dayIdx=(S.dayIdx+1)%7; S.dayNum++; S.day=DAYS[S.dayIdx]; if(S.flags.modDays>0) S.flags.modDays--; if(S.flags.modDays===0&&S.body==="敏感紅腫") S.body="健康"; }
+/* 地區映射表：通訊軟體／高奢酬勞／地標（中國默認） */
+var REGIONS = {
+ "中國":{app:"微信", luxury:"愛馬仕包、上海外灘 W 酒店頂樓套房", landmarks:["上海／北京／成都商圈","網紅鏡面攝影棚","深夜無人的士"], cities:["上海 · 合租公寓","上海 · 一人公寓","北京 · 租屋","成都 · 租屋"]},
+ "台灣":{app:"LINE", luxury:"精品包、信義區 W 酒店／寒舍艾美套房", landmarks:["台北信義區／東區","汽車旅館 (Motel) 情趣套房","陽明山夜景"], cities:["台北 · 租屋","台北 · 合租公寓","台北 · 一人公寓"]},
+ "日本":{app:"LINE", luxury:"銀座精品、六本木／新宿柏悅酒店高空套房", landmarks:["東京澀谷／新宿／六本木","愛情賓館 (Love Hotel)","山手線末班車"], cities:["東京 · 合租公寓","東京 · 一人公寓","大阪 · 合租公寓"]},
+ "韓國":{app:"KakaoTalk", luxury:"清潭洞精品、首爾江南區 Signiel 樂天塔套房", landmarks:["首爾弘大／江南／梨泰院","設計感精品旅館","漢江公園深夜停車場"], cities:["首爾 · 合租公寓","首爾 · 一人公寓","首爾 · 租屋"]}
+};
+function region(){ return (ID&&REGIONS[ID.region])||REGIONS["中國"]; }
+/* 男嘉賓生成池（常駐名單上限 5 位；每位有 X ID、外貌／賽道、表面人設、隱藏反差） */
+var GUEST_TEMPLATES=[
+ {xid:"KuroLens", look:"冷峻骨相 · 鏡面棚硬核攝影", persona:"話少、專業、器材全包派", hidden:"鏡頭一關就變細心，會幫人吹頭髮、買熱飲"},
+ {xid:"NanFeng7", look:"陽光肌肉 · 戶外露出系", persona:"玩世不恭、嘴上冇正經", hidden:"其實最守邊界，開機前必逐項確認尺度"},
+ {xid:"AokiSora", look:"清瘦少年感 · 聲控 ASMR", persona:"溫聲細語、深夜電台感", hidden:"佔有慾藏喺語氣入面，吃醋都唔出聲"},
+ {xid:"LongGege", look:"壯碩體型差 · 制服美學", persona:"大哥派頭、出手闊綽", hidden:"私下意外地怕被拒絕，請人食飯都要諗藉口"},
+ {xid:"MoSheng", look:"神秘面具 · 道具開發系", persona:"從不露臉、規矩多多", hidden:"面具底下係圈外正職，對身份保密比邊個都緊張"},
+ {xid:"TaoZi9", look:"鄰家師兄 · 日常陪拍系", persona:"親和力強、CP 粉最多", hidden:"營業笑容收工即消失，私下只想瞓覺"},
+ {xid:"YeHang", look:"夜行冷感 · 半公開張力", persona:"高冷惜字、約拍難求", hidden:"小號潛水多年，係水群入面最活躍嗰個"},
+ {xid:"GymBroHan", look:"健身猛男 · 汗水力量系", persona:"直來直去、體能怪物", hidden:"會默默記低合作對象嘅飲食禁忌"}
+];
+/* USDT 價目基準（防通膨錨點）：門檻入群費按人氣階級 */
+function groupFee(){ return S.popScore<40?"30~50":S.popScore<180?"88~150":"200~388"; }
+function isFunnelViolation(t){ return /(x|貼文|帖|公域).{0,6}(無碼|全裸|唔打碼|不打碼)/i.test(t)||/(無碼|全裸).{0,5}(丟上|發上|放上|po).{0,4}(x|公域)/i.test(t); }
+/* 網路軌道詞彙鎖：社群文字強制「坤」替換 */
+function kunReplace(s){ return String(s)
+ .replace(/龜頭|龟头/g,"坤頭")
+ .replace(/雞雞|鸡鸡/g,"坤坤")
+ .replace(/雞巴|鸡巴|肉棒|陽具|阳具|陰莖|阴茎|老二|命根子/g,"坤巴")
+ .replace(/睪丸|睾丸|陰囊|阴囊|蛋蛋/g,"坤蛋")
+ .replace(/屌/g,"坤"); }
 var historyLog = [];
 var ID = null; // 玩家開局揀嘅身份，開始前係 null
 var PRESETS = [
- {name:"櫻子", alias:"大櫻", from:"台灣", city:"東京 · 合租公寓", job:"中學體育老師", night:"X＋Telegram 檔案庫創作者", goal:"賺錢為將來鋪路", money:420, trait:"大膽進取"},
- {name:"小夜", alias:"小夜", from:"台灣", city:"東京 · 一人公寓", job:"OL 上班族", night:"直播主", goal:"存錢／還債", money:120, trait:"搞笑親民"},
- {name:"阿莓", alias:"阿莓", from:"香港", city:"東京 · 合租公寓", job:"留學生（兼職打工）", night:"舞蹈／短片創作者", goal:"紅遍全網，衝人氣", money:120, trait:"大膽進取"}
+ {name:"櫻子", alias:"大櫻", xid:"sakuradai", region:"日本", city:"東京 · 合租公寓", job:"中學體育老師", body:"體育老師底子，身形緊緻有線條", style:"純欲 / 反差", mode:"平衡", goal:"賺錢為將來鋪路", money:420, trait:"大膽進取"},
+ {name:"小夜", alias:"小夜", xid:"yoruOL", region:"日本", city:"東京 · 一人公寓", job:"OL 上班族", body:"OL 包臀裙身段，眼鏡娘反差", style:"反差 / 制服", mode:"DIY為主", goal:"存錢／還債", money:120, trait:"搞笑親民"},
+ {name:"阿莓", alias:"阿莓", xid:"ichigo9", region:"日本", city:"東京 · 合租公寓", job:"留學生（兼職打工）", body:"嬌小靈活，舞者柔韌度", style:"聲控 / 舞蹈", mode:"合拍為主", goal:"紅遍全網，衝人氣", money:120, trait:"大膽進取"}
 ];
 function $(id){return document.getElementById(id);}
+function syncCities(regionName, selected){
+ var sel=$('fCity'); if(!sel) return;
+ var list=(REGIONS[regionName]||REGIONS["中國"]).cities;
+ sel.innerHTML=list.map(function(c){return '<option'+(c===selected?' selected':'')+'>'+escapeHtml(c)+'</option>';}).join('');
+ if(selected&&list.indexOf(selected)>=0) sel.value=selected;
+}
 function selectTrait(name){
  document.querySelectorAll('.trait').forEach(function(el){ el.classList.toggle('sel', el.getAttribute('data-trait')===name); });
 }
 function applyPreset(i){
  var p=PRESETS[i]; if(!p) return;
  document.querySelectorAll('.preset').forEach(function(el){ el.classList.toggle('sel', +el.getAttribute('data-preset')===i); });
- $('fName').value=p.name; $('fAlias').value=p.alias; $('fFrom').value=p.from; $('fCity').value=p.city; $('fJob').value=p.job; $('fNight').value=p.night; $('fGoal').value=p.goal; $('fMoney').value=String(p.money);
+ $('fName').value=p.name; $('fAlias').value=p.alias; $('fXid').value=p.xid; $('fRegion').value=p.region; syncCities(p.region, p.city); $('fJob').value=p.job; $('fBody').value=p.body; $('fStyle').value=p.style; $('fMode').value=p.mode; $('fGoal').value=p.goal; $('fMoney').value=String(p.money);
  selectTrait(p.trait);
 }
 document.querySelectorAll('.preset').forEach(function(el){ el.addEventListener('click',function(){ applyPreset(+el.getAttribute('data-preset')); }); });
 document.querySelectorAll('.trait').forEach(function(el){ el.addEventListener('click',function(){ document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('sel')}); selectTrait(el.getAttribute('data-trait')); }); });
-['fName','fAlias','fFrom','fCity','fJob','fNight','fGoal'].forEach(function(id){ $(id).addEventListener('change',function(){ document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('sel')}); }); });
+['fName','fAlias','fXid','fRegion','fCity','fJob','fBody','fStyle','fMode','fGoal'].forEach(function(id){ $(id).addEventListener('change',function(){ document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('sel')}); }); });
+$('fRegion').addEventListener('change',function(){ syncCities($('fRegion').value); });
 function currentTrait(){ var el=document.querySelector('.trait.sel'); return el?{name:el.getAttribute('data-trait'), pop:+el.getAttribute('data-pop')||0}:{name:"大膽進取",pop:6}; }
-function identityText(){ if(!ID) return ''; return ID.name+'（網名「'+ID.alias+'」），來自'+ID.from+'，住喺'+ID.city+'，白天係'+ID.job+'，夜晚係'+ID.night+'，性格路線：'+ID.trait+'，目標：'+ID.goal+(ID.custom?'；補充：'+ID.custom:''); }
+function identityText(){ if(!ID) return ''; return 'X ID：@'+ID.xid+'，藝名「'+ID.alias+'」（稱呼：'+ID.name+'），所在地區：'+ID.region+'，住喺'+ID.city+'，白天身份／職業反差：'+ID.job+'，身材外貌：'+ID.body+'，主打風格：'+ID.style+'，偏好模式：'+ID.mode+'，性格路線：'+ID.trait+'，目標：'+ID.goal+(ID.custom?'；其他設定：'+ID.custom:''); }
 function startGame(){
- var name=$('fName').value.trim(), alias=$('fAlias').value.trim();
- if(!name||!alias){ $('setupErr').textContent='要填返你嘅名同夜晚網名先開始到（㩒上面預設身份可以一鍵填好）。'; return; }
+ var alias=$('fAlias').value.trim(), xid=$('fXid').value.trim().replace(/^@/,'');
+ if(!alias||!/^[A-Za-z0-9]+$/.test(xid)){ $('setupErr').textContent='要填返藝名同 X ID 先開始到（X ID 只可以用純字母與數字；㩒上面預設身份可以一鍵填好）。'; return; }
  $('setupErr').textContent='';
  var tr=currentTrait();
- ID={name:name, alias:alias, from:$('fFrom').value, city:$('fCity').value, job:$('fJob').value, night:$('fNight').value, goal:$('fGoal').value, trait:tr.name, custom:$('fCustom').value.trim()};
- S={page:1, scene:ID.city+'・你的房間（星期一早上）', pop:"查無此人", popScore:tr.pop, money:+$('fMoney').value, wealth:"勉強餬口", body:"健康", fans:12+tr.pop*4, members:8, day:"星期一", dayNum:1, dayIdx:0, flags:{coachDeal:false, roommateBond:false}};
+ var name=$('fName').value.trim()||alias;
+ ID={name:name, alias:alias, xid:xid, region:$('fRegion').value, city:$('fCity').value, job:$('fJob').value, body:$('fBody').value.trim(), style:$('fStyle').value.trim(), mode:$('fMode').value, goal:$('fGoal').value, trait:tr.name, custom:$('fCustom').value.trim()};
+ S={page:1, scene:ID.city+'・你的房間（星期一早上）', pop:"查無此人", popScore:0, money:+$('fMoney').value, wealth:"勉強餬口", body:"健康", fans:0, members:0, day:"星期一", dayNum:1, dayIdx:0, lastPostDay:0, activeGuest:null, guests:[], retired:[], anchors:[], mods:[], flags:{coachDeal:false, roommateBond:false, posted:false, pendingRefill:false, banUntil:0, modDays:0}};
  S.pop=popLabel(S.popScore); S.wealth=wealthLabel(S.money);
  historyLog=[];
  $('setupBox').classList.add('hidden'); $('gameArea').classList.remove('hidden');
- $('headerSub').textContent=ID.city.split(' · ')[0]+' · 白天係'+ID.job+'，夜晚係「'+ID.alias+'」。揀又得，自己打字都得。';
- $('idCard').innerHTML='<strong>你今局嘅身份：'+escapeHtml(ID.name)+' · 「'+escapeHtml(ID.alias)+'」</strong><br>來自'+escapeHtml(ID.from)+' · '+escapeHtml(ID.city)+'<br>白天：'+escapeHtml(ID.job)+'　｜　夜晚：'+escapeHtml(ID.night)+'<br>性格：'+escapeHtml(ID.trait)+'　｜　目標：'+escapeHtml(ID.goal)+(ID.custom?'<br>補充：'+escapeHtml(ID.custom):'');
- $('worldNote').textContent='你係 '+identityText()+'。狀態會隨你嘅選擇變：人氣、錢、身體、頁數都會郁。故事點走，冇標準答案 — 你打咩，佢接咩。';
+ $('headerSub').textContent=ID.region+' · 白天係'+ID.job+'，夜晚係「'+ID.alias+'」（@'+ID.xid+'）。揀又得，自己打字都得；打 //面板、//手機、查看X、查看TG 有特別介面。';
+ $('idCard').innerHTML='<strong>你今局嘅角色卡：'+escapeHtml(ID.alias)+' · @'+escapeHtml(ID.xid)+'</strong><br>所在地區：'+escapeHtml(ID.region)+' · '+escapeHtml(ID.city)+'<br>白天：'+escapeHtml(ID.job)+'　｜　身材：'+escapeHtml(ID.body)+'<br>主打風格：'+escapeHtml(ID.style)+'　｜　偏好模式：'+escapeHtml(ID.mode)+'<br>性格：'+escapeHtml(ID.trait)+'　｜　目標：'+escapeHtml(ID.goal)+(ID.custom?'<br>其他設定：'+escapeHtml(ID.custom):'');
+ $('worldNote').textContent='你係 '+identityText()+'。粉絲由 0 起步，男嘉賓名單上限 5 位；狀態會隨你嘅選擇變：人氣、錢、身體、頁數都會郁。故事點走，冇標準答案 — 你打咩，佢接咩。';
  $('story').innerHTML=''; renderStatus();
- addTurn('', ["星期一早上，你喺"+ID.city+"醒來。窗外有電車聲，手機有 3 個通知：白天份工嘅群組、一個合作邀請、仲有你夜晚帳號嘅課金提示。","白天，你係"+ID.job+"；夜晚，你係「"+ID.alias+"」— "+ID.night+"。你嚟自"+ID.from+"，性格係"+ID.trait+"，今個月嘅目標好清楚："+ID.goal+"。","兩邊嘅人生點樣平衡、啲錢點樣賺、啲人點樣揀 — 全部由你決定。你可以㩒下面嘅選項，亦可以喺輸入框打任何你想做嘅事，寫幾長都得。"]);
- setChoices(["照常返工／返學，扮冇事","去健身房／搵合作對象傾拍片","睇吓課金榜同群組","留喺房，諗吓呢個月點部署"]);
+ addTurn('', ["星期一早上，你喺"+ID.city+"醒來。手機好安靜 — X 主頁空蕩蕩，粉絲數係 0，私信箱得返一封系統歡迎訊息。呢個帳號「"+ID.alias+"」（@"+ID.xid+"），係你下定決心要認真經營落去嘅嗰個。",
+ "付費門檻群「"+ID.alias+"檔案庫」啱啱建立，入面一個人都冇。白天，你係"+ID.job+"；夜晚，你想靠鏡頭張力同商業算計，將呢個 0 變成真金白銀嘅 USDT。房租同生活費唔會等人 — 你嘅主打係"+(ID.style||'未定')+"，偏好"+ID.mode+"，今個月嘅目標好清楚："+ID.goal+"。",
+ "第一步點行，由你決定：發第一篇單人貼文釣魚、睇吓手機有咩動靜，定係照常返工儲住本錢先。記住呢行嘅鐵律：X 只放打碼預告，錢要入檔案庫先賺到。"]);
+ setChoices(["喺 X 發第一篇單人預告貼文","查看手機","照常返工／返學，扮冇事","諗吓呢個月點部署"]);
  window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -305,9 +359,9 @@ function workSceneData(){
  }
  if(/OL|上班族/.test(job)){
   return { scene: cityBase()+'・公司（日間）', dMoney:100, dPop:2,
-   text:["你返公司開會。投影片、會議室、即溶咖啡 — 你企喺白板前面報告嗰陣，邊個會諗到，夜晚開直播嗰個「"+alias+"」，就係企喺度嘅你。",
+   text:["你返公司開會。投影片、會議室、即溶咖啡 — 你企喺白板前面報告嗰陣，邊個會諗到，夜晚喺 X 同檔案庫更新嗰個「"+alias+"」，就係企喺度嘅你。",
          "晏晝同同事食飯，佢哋講緊邊個網紅又出咗事，你低頭食飯，笑笑口唔出聲。白天嘅你越普通，夜晚嘅你就越安全。"],
-   choices:["放工返屋企","同同事食晏","加班前睇吓群組","返屋企開直播"]};
+   choices:["放工返屋企","同同事食晏","加班前睇吓群組","返屋企拍預錄片"]};
  }
  if(/留學生/.test(job)){
   return { scene: cityBase()+'・大學校園（日間）', dMoney:50, dPop:2,
@@ -325,7 +379,7 @@ function workSceneData(){
   return { scene: cityBase()+'・健身室（日間 · 返工）', dMoney:120, dPop:2,
    text:["你返健身室開工 — 不過今次你企喺教練嗰邊。帶會員做組數、執動作、計飲食，你講嘅每一句都係專業口吻。",
          "有會員問你有冇玩開社交平台，你笑笑口話：「有呀，不過好悶㗎。」悶唔悶，你自己知就得。"],
-   choices:["收工去健身房搵教練拍片","同同事食晏","返屋企開直播","返房休息"]};
+   choices:["收工去健身房搵教練拍片","同同事食晏","返屋企拍預錄片","返房休息"]};
  }
  if(/便利店|餐飲|店員/.test(job)){
   return { scene: cityBase()+'・店舖（日間 · 返工）', dMoney:60, dPop:1,
@@ -337,7 +391,7 @@ function workSceneData(){
   return { scene: cityBase()+'・屋企（日間 · 接案）', dMoney:70, dPop:1,
    text:["你喺屋企開工。接案、改稿、追數 — 自由工作者嘅「自由」，一半係真，一半係冇人管你幾時瞓。",
          "做到悶，你企起身沖杯咖啡，望吓窗外。白天同夜晚嘅界線喺你身上最模糊，所以你更加要自己定規矩。"],
-   choices:["出街行吓抖吓","開直播同粉絲傾偈","返房休息","睇吓課金榜"]};
+   choices:["出街行吓抖吓","拍條預錄短片","返房休息","睇吓課金榜"]};
  }
  return { scene: cityBase()+'（日間 · 返工）', dMoney:50, dPop:2,
   text:["你照常返去做白天份工："+job+"。忙起上嚟咩都唔記得，停低嗰陣，先諗起夜晚嗰個自己。",
@@ -345,19 +399,48 @@ function workSceneData(){
   choices:["放工返屋企","同同事食晏","返房休息","睇吓群組反應"]};
 }
 
+var SHOOT_VARS=[
+ "拍到一半，腳架突然滑落，鏡頭歪向天花板。你哋對望一眼笑咗出嚟，又即刻壓低聲 — 酒店隔音差，隔籬房傳嚟腳步聲，嗰種「怕被發現」嘅刺激，令之後嘅每一格都繃得更緊。",
+ "原本講好只拍短片，但拍到中段，對方忽然伸手推開攝影機，遮住鏡頭：「呢段，唔錄。」鏡頭熄咗之後嘅事，只屬於你哋兩個。",
+ "激烈嘅空檔，對方拎起你部手機，對住你哋交纏嘅凌亂畫面拍咗張特寫，遞返俾你，挑逗咁問：「敢唔敢發去水群釣魚？」"
+];
+var BODYMOD_PRICE=450;
 var SCENES = [
-/* ── 新場景 1：直播 ── */
-{ test:function(t){return /直播|開播|live/.test(t)},
-  text:["你開咗直播。補光燈一亮，鏡頭入面嘅你同白天判若兩人 — 你逐個同粉絲打招呼，讀留言，笑住接住每一句撩你嘅說話，又識得喺最啱嘅位停一停，吊住佢哋胃口。",
-        "打賞提示一路跳，熟悉嘅名字排住隊出現。你記低邊個最肯課、邊個淨係出聲唔出錢，落播之後先慢慢部署。呢一晚，數字升得幾靚。"],
-  dMoney:120, dPop:9, scene:function(){return roomScene('夜晚 · 直播完');},
-  choices:["落播之後覆吓粉絲私訊","睇吓課金榜","再出多個帖預告下次直播","瞓覺，聽朝再算"]},
+/* ── 場景：預錄拍攝（純預錄三階段工作流，嚴禁直播元素） ── */
+{ test:function(t){return /拍攝|拍片|錄影|預錄|開機|合拍/.test(t)},
+  text:function(){ var g=activeGuestObj(); var who=g?('@'+g.xid):'合作對象'; var v=SHOOT_VARS[Math.floor(Math.random()*SHOOT_VARS.length)];
+   return ["【階段一 · 線下碰面與破冰試探】約好嘅時間，你去到"+region().landmarks[1]+"附近嘅場地。"+who+"已經到咗，器材同燈都 set 好晒。開機之前，你哋逐項確認腳本、尺度同安全邊界 — 邊啲位唔拍、邊啲角度要避，講清楚先開始。換裝嗰陣對方打量你嘅眼神停多咗半秒，調整燈光嗰陣手指擦過你手臂，邊個都冇出聲。",
+          "【階段二 · 鏡頭內外的情慾博弈】紅燈亮起，成段片係離線預錄：冇觀眾、冇彈幕、冇實時打賞，只有鏡頭前面你哋兩個嘅呼吸同節奏。"+v,
+          "【階段三 · 關機後的餘溫】攝影機關咗，房入面靜返落嚟。你身上仲有未退嘅潮紅同痕跡 — 係即刻剪輯營業、留低溫存，定係帶住呢身痕跡去赴另一場約，全部由你揀。"];},
+  dMoney:150, dPop:12, scene:function(){return region().landmarks[1]+'（拍攝中）';}, onShoot:true,
+  choices:["剪輯預告發上 X，再更新檔案庫完整版","留喺現場，享受關機後嘅餘溫","帶住痕跡去見另一位男嘉賓","瞓覺，聽朝再算"]},
+/* ── 場景：關機後溫存（Aftercare，推進曖昧／地下戀情） ── */
+{ test:function(t){return /溫存|餘溫|aftercare/i.test(t)},
+  text:function(){ var g=activeGuestObj(); var who=g?('@'+g.xid):'佢';
+   return ["你冇急住走。"+who+"收好器材，轉頭幫你倒咗杯暖水，又拎風筒過嚟，企喺你身後慢慢幫你吹乾頭髮。鏡頭前面嗰種張力散晒，剩低嘅係一種好日常、好貼身嘅安靜。",
+          "佢叫咗外賣，兩個人攤喺床邊食邊傾，傾嘅唔係工作，係啲好無謂嘅生活小事。你知呢種關機後嘅時間，先係最容易令人沉落去嘅 — 亦都係最危險嘅嗰種。檯面上，你哋永遠只係普通合作關係。"];},
+  dMoney:0, dPop:1, scene:null, onAftercare:true,
+  choices:["返房休息","剪輯預告發上 X，再更新檔案庫完整版","瞓覺，聽朝再算","查看手機"]},
+/* ── 場景：帶痕赴約（見痕嫉妒） ── */
+{ test:function(t){return /帶住痕跡|帶痕|見痕/.test(t)},
+  text:function(){ var others=S.guests.filter(function(g){return g.xid!==S.activeGuest;}); var g=others.length?others[0]:null; var who=g?('@'+g.xid):'另一位男嘉賓';
+   return ["你帶住未退嘅痕跡去見"+who+"。佢嘅視線喺你鎖骨位置停咗一停，笑容淡咗半分，語氣仲係平常咁傾公事，但問嘅問題開始唔係公事：「琴日嗰場，拍得好順呀？」",
+          "空氣入面嗰種拉扯，你隔住衫都 feel 到。佢冇點破，你亦冇解釋 — 有啲痕跡，本身就係一種宣示。"];},
+  dMoney:0, dPop:2, scene:null,
+  choices:["照常傾公事，當冇事發生","剪輯預告發上 X，再更新檔案庫完整版","返房休息","查看手機"]},
+/* ── 場景：身體改造（絕對同意權，拒絕絕無懲罰） ── */
+{ test:function(t){return /紋身|穿孔|舌釘|乳釘|臍環|身體改造/.test(t)},
+  text:function(input){ var item=/舌釘/.test(input)?'舌釘':/乳釘/.test(input)?'乳釘':/臍環/.test(input)?'臍環':/穿孔/.test(input)?'穿孔':'紋身';
+   return ["呢件事，你諗清楚先嚟 — 身體係你自己嘅，冇任何人可以逼你，唔做亦唔會有任何懲罰。工作室消毒水味好重，師傅逐項講風險同護理，你簽咗同意先開始。"+item+"落好嗰陣，你望住鏡入面嘅自己，心跳快過拍片嗰陣。",
+          "師傅話頭幾日係敏感紅腫期，要小心護理。你已經諗到，第一張曝光特寫出街嗰陣，留言區會癲成點樣。呢筆錢（"+BODYMOD_PRICE+" USDT）花得值唔值，好快知。"];},
+  dMoney:function(){return -BODYMOD_PRICE;}, dPop:4, scene:function(){return cityBase()+'・身體改造工作室';}, onBodyMod:true,
+  choices:["等紅腫退咗先出特寫","即刻影張若隱若現嘅預告","返房休息","查看手機"]},
 /* ── 新場景 2：粉絲私訊／金主 ── */
-{ test:function(t){return /私訊|覆.*訊息|粉絲訊息|金主|粉絲傾|dm/.test(t)},
+{ test:function(t){return /私訊|覆.*訊息|粉絲訊息|金主|粉絲傾|傾企劃|傾細節|覆\s*@|dm/.test(t)},
   text:["你逐個覆粉絲私訊。大部分係閒聊同讚美，你笑笑口應付；其中一個講嘢特別有分寸，從來唔催相，只係每次出新內容都準時課金，仲會認真留言講邊一段拍得好。",
         "你同佢傾多咗幾句，先明有錢嗰啲唔一定最麻煩 — 最值錢嘅關係，往往係慢慢養出嚟嘅信任。你冇答應任何線下見面，只係留低一個伏筆：下次有特別企劃，第一個話佢知。"],
   dMoney:60, dPop:5, scene:null,
-  choices:["喺群組出個新遊戲炒熱氣氛","睇吓課金榜","開直播同粉絲傾偈","返房休息"]},
+  choices:["喺群組出個新遊戲炒熱氣氛","睇吓課金榜","拍條預錄短片","返房休息"]},
 /* ── 新場景 3：室友日常（旗標 roommateBond：熟咗之後有後續版） ── */
 { test:function(t){return /室友|客廳|合租/.test(t)},
   text:function(){ if(S.flags.roommateBond){
@@ -406,9 +489,9 @@ var SCENES = [
   choices:["放條舞片上 X","返屋企休息","同舞蹈老師傾下次合作","睇吓課金榜"]},
 /* ── 新場景 6：放假外出／旅行 ── */
 { test:function(t){return /旅行|出街|逛街|行街|溫泉|海邊|郊遊|放假/.test(t)},
-  text:["你俾自己放一日假，出咗去行吓。冇開直播，冇影相任務，純粹行街、食嘢、望吓呢個城市 — 電車、橫巷、便利店門口嘅光，全部都係你當初嚟呢度嘅原因。",
+  text:["你俾自己放一日假，出咗去行吓。冇開機，冇影相任務，純粹行街、食嘢、望吓呢個城市 — 電車、橫巷、便利店門口嘅光，全部都係你當初嚟呢度嘅原因。",
         "玩咗大半日，先發現自己笑多咗。賺錢要緊，但人都要叉電嘅。返到屋企，你覺得聽日可以再搏過。"],
-  dMoney:-60, dPop:1, body:"健康", scene:function(){return cityBase()+'・街上（日間）';},
+  dMoney:-60, dPop:1, body:function(){return S.flags.modDays>0?"敏感紅腫":"健康";}, scene:function(){return cityBase()+'・街上（日間）';},
   choices:["返屋企休息","影張旅行相放上 X","瞓覺，聽朝再算","諗吓呢個月嘅目標"]},
 /* ── 新場景 7：深夜便利店／宵夜 ── */
 { test:function(t){return /宵夜|夜市|買嘢食/.test(t)||(/便利店/.test(t)&&!/打工|返工/.test(t))},
@@ -416,25 +499,30 @@ var SCENES = [
         "呢種冇人識你、唔使表演嘅時刻，先係最奢侈嘅休息。你慢慢行返屋企，聽日嘅事，聽日先算。"],
   dMoney:-15, dPop:0, scene:function(){return cityBase()+'・便利店（深夜）';},
   choices:["返房休息","瞓覺，聽朝再算","返去同室友傾吓偈","睇吓課金榜"]},
-/* ── 原有場景：群組／X 出帖 ── */
-{ test:function(t){return /群組|telegram|粉絲|發帖|出帖|相|po/.test(t)},
-  text:["你喺群組同 X 放咗新內容。留言即刻湧入：",
-        "\n🔥🔥🔥\n「姐姐今日狀態好好！」\n「課金了課金了！」",
-        "人數慢慢升，課金跟住升。做內容冇捷徑，就係密密出、密密互動。"],
-  dMoney:90, dPop:10, scene:null,
+/* ── 場景：X 出帖／群組（流量漏斗：X 打碼釣魚預告 ➔ 水群發酵 ➔ 檔案庫無碼版變現） ── */
+{ test:function(t){return /群組|telegram|粉絲|發帖|出帖|相|預告|檔案庫|水群|po/.test(t)},
+  text:function(input){ if(isFunnelViolation(input)){
+     return ["你一時衝動，將無碼完整版直接丟上 X 公域。結果同呢行嘅鐵律一模一樣：白嫖黨瘋狂保存、轉發，讚數衝得好快，但檔案庫嘅入群申請 — 零。冇人會為已經睇晒嘅嘢俾錢。",
+            "更麻煩嘅係，平台審查好快就盯上你：貼文俾人標記、觸及率直線下跌，帳號進入 Shadowban 觀察期，警戒燈號直接跳紅。呢一課好貴：X 嗰邊，永遠只可以放打碼釣魚預告。"];
+    }
+    return ["你跟足流量漏斗行：先喺 X 發一張打碼釣魚預告，吊足白嫖黨胃口；再去公共水群「全國純愛戰士午夜互助協會」丟兩張花絮發酵，留言即刻湧入：",
+           "\n🔥🔥🔥\n「姐姐今日狀態好好！」\n「無碼版呢？唔好吊胃口啦」\n「坤坤，檔案庫點入呀？」",
+           "問門檻嘅私信一條接一條。真正嘅錢，係喺付費門檻群「"+(ID?ID.alias:'')+"檔案庫」入面更新無碼完整版嗰陣先入袋 — 入群費而家係 "+groupFee()+" USDT／人。呢套先係呢行嘅生存方式。"];},
+  dMoney:function(input){ if(isFunnelViolation(input)){ S.flags.banUntil=S.dayNum+1; return 0; } S.lastPostDay=S.dayNum; return 60+Math.min(240,S.popScore*2); },
+  dPop:function(input){ return isFunnelViolation(input)?2:10; }, scene:null,
   choices:["再出多個帖","睇吓課金榜","同粉絲傾吓偈","收工休息"]},
 /* ── 原有場景拆分 A：瞓覺 — 唯一會進一日嘅場景 ── */
 { test:function(t){return /瞓覺|睡覺|上床瞓|入睡|瞓落床/.test(t)}, sleep:true,
   text:function(){ return ["你沖完涼，瞓落床。手機較咗靜音，群組嘅紅點由佢閃 — 今晚邊個課金、邊個留言，都等聽朝先算。",
         "瞓醒已經係"+S.day+"，即係"+dayLabel()+"。窗外嘅光同琴日有少少唔同，你伸個懶腰：日子就係咁，一瞓醒，就真係過咗一日。"];},
-  dMoney:0, dPop:0, body:"健康", scene:function(){return roomScene(S.day+'早上');},
-  choices:["照常返工／返學，扮冇事","睇吓課金榜同群組","開直播同粉絲傾偈","諗吓今日點部署"]},
+  dMoney:0, dPop:0, body:function(){return S.flags.modDays>0?"敏感紅腫":"健康";}, scene:function(){return roomScene(S.day+'早上');},
+  choices:["照常返工／返學，扮冇事","睇吓課金榜同群組","拍條預錄短片","諗吓今日點部署"]},
 /* ── 原有場景拆分 B：普通休息 — 唔進一日 ── */
 { test:function(t){return /休息|瞓|訓|返屋企|早抖|返房|沖涼/.test(t)},
-  text:function(){ return ["你返到房，沖涼，攤喺床上面抖吓。冇開直播，冇覆訊息，就係俾自己停一停。",
+  text:function(){ return ["你返到房，沖涼，攤喺床上面抖吓。冇開機，冇覆訊息，就係俾自己停一停。",
         "休息唔等於過咗一日 — 而家仲係"+dayLabel()+"。等你真係瞓覺瞓醒，先會去到下一日。你諗吓，陣間仲做唔做多陣嘢好。"];},
-  dMoney:0, dPop:0, body:"健康", scene:function(){return roomScene('夜晚');},
-  choices:["瞓覺，聽朝再算","瞓之前睇吓課金榜","覆吓粉絲訊息","開直播同粉絲傾偈"]}
+  dMoney:0, dPop:0, body:function(){return S.flags.modDays>0?"敏感紅腫":"健康";}, scene:function(){return roomScene('夜晚');},
+  choices:["瞓覺，聽朝再算","瞓之前睇吓課金榜","覆吓粉絲訊息","拍條預錄短片"]}
 ];
 var FALLBACKS = [
 ["你照住自己嘅諗法做咗落去。件事唔算大，但一步一步，東京嘅日子就係咁累積出嚟 — 有啲嘢試咗先知，有啲人遇咗先明。","手機震一震，群組又有新訊息。你望一望，笑咗笑。"],
@@ -442,8 +530,8 @@ var FALLBACKS = [
 ["做完，你停一停，諗吓值唔值得。你嘅原則好簡單：唔傷害自己，唔呃人，開心同有錢賺就繼續。","夜色落嚟，合租公寓嘅燈逐盞熄。"]
 ];
 
-function wealthLabel(m){ return m<800?"勉強餬口":m<2500?"手頭鬆動":m<6000?"小有積蓄":"衣食無憂";}
-function popLabel(s){ return s<15?"查無此人":s<40?"底層透明":s<90?"小有名氣":s<180?"圈內紅人":"話題女王";}
+function wealthLabel(m){ return m<800?"勉強餬口":m<2500?"略有盈餘":m<6000?"穩定小康":m<15000?"圈內富婆":"財富自由";}
+function popLabel(s){ return s<15?"查無此人":s<40?"底層透明":s<90?"略有起色":s<180?"萬粉新人":s<350?"圈內熟面孔":"圈內頂流";}
 
 function renderStatus(){
 document.getElementById('status').innerHTML =
@@ -455,6 +543,9 @@ document.getElementById('status').innerHTML =
 (S.flags&&S.flags.roommateBond?'<span class="chip">室友 <strong>已經熟絡</strong></span>':'')+
 '<span class="chip">人氣 <strong>'+S.pop+'</strong> · X粉絲 '+S.fans+'</span>'+
 '<span class="chip">財富 <strong>'+S.wealth+'</strong> · '+S.money+' USDT</span>'+
+'<span class="chip">警戒 <strong>'+riskState().e+' '+riskState().label+'</strong></span>'+
+'<span class="chip">檔案庫 <strong>'+S.members+' 人</strong></span>'+
+'<span class="chip">男嘉賓 <strong>'+S.guests.length+' / 5</strong></span>'+
 '<span class="chip">身體 <strong>'+S.body+'</strong></span>'+
 '<div style="flex-basis:100%"><div class="bar"><i style="width:'+Math.min(100,S.popScore)+'%"></i></div></div>';
 }
@@ -463,8 +554,8 @@ var story=document.getElementById('story');
 var div=document.createElement('div'); div.className='turn';
 var html='';
 if(playerText) html+='<div class="player">'+escapeHtml(playerText)+'</div>';
-html+='<div class="narr">'+paras.map(function(p){return '<p>'+escapeHtml(p)+'</p>'}).join('')+'</div>';
-if(chat) html+='<div class="chatbox">'+escapeHtml(chat)+'</div>';
+html+='<div class="narr">'+paras.map(function(p){return '<p>'+escapeHtml(kunReplace(String(p)).replace(/你/g,'妳'))+'</p>'}).join('')+'</div>';
+if(chat) html+='<div class="chatbox">'+escapeHtml(kunReplace(chat).replace(/你/g,'妳'))+'</div>';
 html+='<div class="meta">❖ P.'+String(S.page).padStart(3,'0')+' | '+dayLabel()+' | 當前場景：'+S.scene+'\n❖ 帳號人氣：'+S.pop+'\n❖ 財富狀態：'+S.wealth+'\n❖ 身體狀態：'+S.body+'</div>';
 div.innerHTML=html; story.appendChild(div);
 historyLog.push({player:playerText||'', paras:paras});
@@ -496,13 +587,458 @@ for(var i=0;i<SCENES.length;i++){ if(SCENES[i].test(low)){ var sc=SCENES[i];
  applyDelta({dMoney:resolveVal(sc.dMoney,input), dPop:resolveVal(sc.dPop,input), scene:resolveVal(sc.scene,input), body:resolveVal(sc.body,input)});
  if(sc.setCoach) S.flags.coachDeal=true;
  if(sc.setRoommate) S.flags.roommateBond=true;
- S.page++; renderStatus(); addTurn(input, paras); setChoices(ch); return;}}
+ if(sc.onShoot) shootDone();
+ if(sc.onAftercare) aftercareDone();
+ if(sc.onBodyMod) bodyModDone(input);
+ S.page++; renderStatus(); addTurn(input, paras); setChoices(ch); postTurnHooks(input); return;}}
 var f=FALLBACKS[Math.floor(Math.random()*FALLBACKS.length)];
 applyDelta({dMoney:Math.floor(Math.random()*30), dPop:2});
-S.page++; renderStatus(); addTurn(input, f); setChoices(["照常返工／返學","開直播同粉絲傾偈","去健身房拍片","瞓覺，聽朝再算"]);
+S.page++; renderStatus(); addTurn(input, f); setChoices(["照常返工／返學","拍條預錄短片","去健身房搵教練","瞓覺，聽朝再算"]); postTurnHooks(input);
 }
 
-function systemPrompt(){ return "你係一個廣東話互動小說模擬器主持，繁體字、廣東話口語。玩家今局身份係："+identityText()+"。成局都要跟呢個身份寫，唔好自動變返做大櫻／體育老師，除非玩家身份本身就係嗰個。而家係"+dayLabel()+"；日子只有喺玩家瞓覺之後先會過一日，其他情節唔好亂咁跳日。已知旗標：健身房定期合作＝"+(S.flags&&S.flags.coachDeal?"已傾成":"未傾成")+"；同室友關係＝"+(S.flags&&S.flags.roommateBond?"已熟絡":"仲生外")+"，寫落去嗰陣要跟返呢啲狀態，唔好寫到矛盾。你要：1) 用展開、豐富嘅描寫接住玩家剛才寫嘅行動，唔好只係改寫佢嗰句；2) 寫完一段故事；3) 最尾用呢個格式俾狀態同選項：\n---\n❖ P.頁數 | 當前場景：…\n❖ 帳號人氣：…\n❖ 財富狀態：…\n❖ 身體狀態：…\n---\n下一步？\nA. …\nB. …\nC. …\nD. …\n內容保持成年人之間自願、合法嘅情節，避免露骨器官描寫同非自願情節。"; }
+/* ══ 風險燈號 ══ */
+function riskState(){
+ if(S.flags.banUntil&&S.dayNum<=S.flags.banUntil) return {e:"🟥", label:"紅燈（爆發態）"};
+ if(S.dayNum-(S.lastPostDay||1)>=3) return {e:"🟨", label:"黃燈（預警態）"};
+ return {e:"🟩", label:"綠燈（安全態）"};
+}
+/* ══ 男嘉賓池（上限 5 位；滿額只從池抽取；刪除先補位） ══ */
+function spawnGuest(){
+ if(S.guests.length>=5) return null;
+ var used=S.guests.map(function(g){return g.xid;});
+ var pool=GUEST_TEMPLATES.filter(function(t){ return used.indexOf(t.xid)<0&&S.retired.indexOf(t.xid)<0; });
+ if(!pool.length) return null;
+ var t=pool[Math.floor(Math.random()*pool.length)];
+ var g={xid:t.xid, look:t.look, persona:t.persona, hidden:t.hidden, collabs:0, stage:"陌生同行"};
+ S.guests.push(g); return g;
+}
+function activeGuestObj(){ for(var i=0;i<S.guests.length;i++) if(S.guests[i].xid===S.activeGuest) return S.guests[i]; return S.guests.length?S.guests[0]:null; }
+function detectGuest(input){ if(!input) return; for(var i=0;i<S.guests.length;i++){ if(input.indexOf(S.guests[i].xid)>=0){ S.activeGuest=S.guests[i].xid; } } }
+function shootDone(){ var g=activeGuestObj(); if(!g) return; g.collabs++; if(g.collabs>=3&&g.stage==="商務搭檔") g.stage="曖昧拉扯"; else if(g.collabs>=1&&g.stage==="陌生同行") g.stage="商務搭檔"; if(g.collabs===1) S.anchors.push('同 @'+g.xid+' 完成首次合拍'); }
+function aftercareDone(){ var g=activeGuestObj(); if(!g) return; if(g.collabs>=3&&g.stage!=="地下戀人"){ g.stage="地下戀人"; S.anchors.push('同 @'+g.xid+' 確認地下戀情（檯面上只係普通合作）'); } else if(g.stage==="商務搭檔"){ g.stage="曖昧拉扯"; } }
+function bodyModDone(input){ var item=/舌釘/.test(input)?'舌釘':/乳釘/.test(input)?'乳釘':/臍環/.test(input)?'臍環':/穿孔/.test(input)?'穿孔':'紋身'; if(S.mods.indexOf(item)<0) S.mods.push(item); S.flags.modDays=3; S.body="敏感紅腫"; S.anchors.push('完成身體改造：'+item+'（進入敏感紅腫期）'); }
+/* ══ 開局破冰：首篇貼文觸發 1~2 位男嘉賓私信（邏輯 A/B/C 隨機） ══ */
+var ICEBREAKS=[
+ function(g){ return '💬 @'+g.xid+'（'+region().app+'） 剛剛\n「你好，我係做'+g.look.split('·')[1].trim()+'嗰邊嘅。啱啱喺 X 睇到你第一篇 — 新人嗰種生澀同骨相，好少有。想約你傾個雙人企劃：場地、設備我全包，片酬五五分。開機之前，腳本同尺度邊界會逐項同你確認，唔啱隨時可以停。」'; },
+ function(g){ return '💬 @'+g.xid+'（'+region().app+'） 剛剛\n「急事救場：我原本約好嗰位女搭檔臨時放鴿子，酒店套房同影棚已經俾晒錢。你身形同風格都啱，地區又近 — 如果你肯救場，分成開到最高嗰檔，條件你開。先傾清楚邊界，啱先接。」'; },
+ function(g){ return '💬 @'+g.xid+'（'+region().app+'） 剛剛\n「潛咗你個帳號幾晚。講真，我好少主動搵新人 — 但你嗰種鏡頭感，唔同。我用大號嚟搵你，係想認真傾：如果要揀第一位雙人合拍搭檔，我想係你。唔急，你諗清楚先覆。」'; }
+];
+function maybeIcebreak(input){
+ if(S.flags.posted) return;
+ if(!/(發|出帖|貼文|預告|檔案庫|水群|po)/i.test(input)) return;
+ S.flags.posted=true; S.lastPostDay=S.dayNum;
+ var n=S.guests.length===0?(1+Math.floor(Math.random()*2)):1;
+ var made=[];
+ for(var i=0;i<n;i++){ var g=spawnGuest(); if(g) made.push(g); }
+ if(!made.length) return;
+ if(!S.activeGuest) S.activeGuest=made[0].xid;
+ S.anchors.push('首篇貼文破冰：'+made.map(function(g){return '@'+g.xid;}).join('、')+' 主動私信');
+ addTurn('', ['你嘅第一篇貼文出咗冇幾耐，手機就震起嚟 — 唔係白嫖黨嘅讚，係真金白銀嗰種私信。呢行嘅規矩係：新人最難嘅唔係冇人睇，係冇人肯做你第一個合作對象。而家，機會自己敲門。'],
+  made.map(function(g){ return ICEBREAKS[Math.floor(Math.random()*ICEBREAKS.length)](g); }).join('\n\n'));
+ setChoices(['用'+region().app+'覆 @'+made[0].xid+'，傾企劃細節','先睇晒啲私信，唔急住覆','查看手機','返房休息']);
+}
+function maybeRefill(){
+ if(!S.flags.pendingRefill||S.guests.length>=5) return;
+ var g=spawnGuest(); S.flags.pendingRefill=false; if(!g) return;
+ S.anchors.push('新嘉賓補位：@'+g.xid+' 加入名單');
+ addTurn('', ['名單空缺冇幾耐，'+region().app+' 就彈出一個新名字 — 圈子就係咁，舊人走咗，新面孔好快補上。'],
+  '💬 @'+g.xid+'（'+region().app+'） 剛剛\n「朋友介紹嘅。睇過你啲片，風格幾啱 — 有機會合作嘅話，隨時搵我傾。」');
+}
+function postTurnHooks(input){ maybeIcebreak(input); maybeRefill(); }
+/* P4 渲染規範：手機／X／TG／通訊輸出以 markdown 代碼框包裹，自動分段、每行上限 30 字 */
+function wrapLine30(line){
+ var chars=Array.from(line); var out=[]; var marks=['，','：','；','、',' '];
+ while(chars.length>30){
+  var cut=30;
+  for(var i=29;i>12;i--){ if(marks.indexOf(chars[i])>=0){ cut=i+1; break; } }
+  out.push(chars.slice(0,cut).join('')); chars=chars.slice(cut);
+ }
+ if(chars.length) out.push(chars.join(''));
+ return out;
+}
+function codeBlock(txt){
+ var lines=[];
+ String(txt).split('\n').forEach(function(l){ wrapLine30(l).forEach(function(x){ lines.push(x); }); });
+ return '```\n'+lines.join('\n')+'\n```';
+}
+/* ══ 公共頻道 UI：手機通知中心／X 評論區／TG 雙群／訂製／面板 ══ */
+var TRENDS=["深夜放毒","純欲天花板","今日營業","反差感","檔案庫更新","同城約拍"];
+var COMMENT_POOL=[
+ {id:"luren_a", txt:"姐姐呢個角度太犯規，坤巴都睇到起立敬禮 🥵", sub:"@kf_22：附議，呢張要入檔案庫先有無碼版？"},
+ {id:"m_sub99", txt:"🧎‍♂️ 求姐姐踩我，門檻幾錢都入", sub:"@passer7：上面嗰個又嚟，笑死"},
+ {id:"bigfan_k", txt:"體型差嗰輯先係神作，幾時再同嗰位合拍？", sub:"@nameuser：護衛隊到場，問價嗰啲自己去睇置頂"},
+ {id:"heihei_3", txt:"幾錢一晚？講個數嚟聽吓", sub:"@nameuser：回上面，呢度唔係你咁玩嘅，自己爬文"},
+ {id:"gua_new", txt:"新粉報到，係水群嗰邊追過嚟嘅，姐姐真人仲索過相 💦", sub:"@oldfan：歡迎入坑，記得入檔案庫"}
+];
+function uiPhone(){
+ var reg=region(); var g=S.guests.length?S.guests[S.guests.length-1]:null;
+ var t1=TRENDS[Math.floor(Math.random()*TRENDS.length)], t2=TRENDS[Math.floor(Math.random()*TRENDS.length)];
+ var txt='┌──────────────────────────┐\n【📱 手機通知中心】 '+dayLabel()+' | 5G | 🔋 72%\n────────────────────\n🐦 【X 動態】🔥 趨勢：#'+t1+' #'+t2+'\n   └ '+(S.guests.length?('@'+S.guests[0].xid+' 轉發了妳的預告片；'):'')+'最新貼文新增 '+(40+S.popScore*2)+' 條熱評；粉絲 '+S.fans+' 人\n✈️ 【Telegram 雙群】\n   └ 全國純愛戰士午夜互助協會 (99+ 則)：群友正在求妳的最新無碼圖\n   └ '+(ID?ID.alias:'')+'檔案庫 ('+S.members+' 人)：'+(S.members>0?'@榜一大哥 發送了打賞紅包':'暫時冷清，等妳引流')+'\n💬 【'+reg.app+' 私信】\n   └ '+(g?('@'+g.xid+'：有個企劃想同妳傾，時間地點就到妳'):'暫時未有新私信 — 發篇預告釣魚先')+'\n────────────────────\n【操作提示】：查看X / 查看TG / 回覆私信 / 返回\n└──────────────────────────┘';
+ addTurn('查看手機', ['你拎起手機，一次過睇晒所有通知。'], codeBlock(txt)); return true;
+}
+function uiX(){
+ var c1=COMMENT_POOL[Math.floor(Math.random()*COMMENT_POOL.length)];
+ var txt='┌──────────────────────────┐\n【@'+(ID?ID.xid:'')+' 剛剛】\n['+(ID?ID.alias:'')+' 最新打碼預告貼文]\n[視頻截圖：釣魚預告畫面，無碼版只在檔案庫]\n❤️ '+(1.2+S.popScore/50).toFixed(1)+'k   🔁 '+(120+S.popScore*2)+'   💬 '+(80+S.popScore)+'\n────────────────────\n評論區：\n1. @'+c1.id+'：'+c1.txt+'\n   └ '+c1.sub+'\n2. @shuiguo：水群嗰邊已經炸咗，快啲更新檔案庫啦\n   └ @gua_new：+1，門檻 '+groupFee()+' USDT 入唔入呀？\n────────────────────\n【操作提示】：回復評論 / 私信貼主 / 返回\n└──────────────────────────┘';
+ addTurn('查看X', ['你打開 X，睇返自己最新貼文嘅數據同評論區。'], codeBlock(txt)); return true;
+}
+function uiTG(){
+ var alias=ID?ID.alias:'', xid=ID?ID.xid:'';
+ var txt='┌──────────────────────────┐\n【Telegram：全國純愛戰士午夜互助協會】\n[23:41] @瓜田李下：邊個有 @'+xid+' 嘅無碼？重金求\n[23:42] @純愛戰士本士：人哋檔案庫先有，呢度釣魚㗎咋\n[23:43] 系統提示：管理員禁言了一名發灰產廣告的帳號\n────────────────────\n【Telegram：'+alias+'檔案庫】（群主：妳）\n[23:44] @榜一大哥：更新啦，紅包已備好\n[23:45] @老粉阿K：姐姐今晚嗰輯係咪同人合拍？\n────────────────────\n【操作提示】：空降發圖或語音 / 切換群組 / 返回\n└──────────────────────────┘';
+ addTurn('查看TG', ['你打開 Telegram，兩個群嘅氣氛完全唔同：一邊係白嫖黨嘅修羅場，一邊係你嘅金主後花園。'], codeBlock(txt)); return true;
+}
+function uiDM(){
+ var reg=region(); var g=activeGuestObj();
+ var txt=g?('💬 @'+g.xid+'（'+reg.app+'） 剛剛\n「上次嗰個企劃，你考慮成點？我嗰邊時間地點都就到你，開機前會逐項同你確認邊界。」'):'💬 暫時未有新的商務私信。';
+ addTurn('查看'+reg.app, ['你打開 '+reg.app+'，睇吓有冇新嘅業內私聯。'], codeBlock(txt)); return true;
+}
+function uiCommission(){
+ var elems=["戶外/半公開露出","道具與玩具開發","體位與制服美學","多人與極限張力","鏡面棚特寫","制服反差"];
+ var pick=[]; while(pick.length<3){ var e=elems[Math.floor(Math.random()*elems.length)]; if(pick.indexOf(e)<0) pick.push(e); }
+ var target=(S.guests.length&&Math.random()<0.6)?('指定 @'+S.guests[Math.floor(Math.random()*S.guests.length)].xid):(Math.random()<0.5?'要求單人':'不限');
+ var lux=region().luxury.split('、'); var reward=lux[Math.floor(Math.random()*lux.length)];
+ var txt='┌──────────────────────────┐\n【📱 私人訂製 / 眾籌任務】\n💰 委託方：榜一大哥 / VIP 群眾籌\n🎬 指定元素：'+pick.join(' + ')+'\n👤 指定對象：'+target+'\n💎 任務酬勞：'+reward+'（具象化高奢資源，不設現金數）\n⚠️ 附加留言：「做好咗，成個場包落嚟俾妳哋慢慢拍。」\n└──────────────────────────┘';
+ addTurn('//查看訂製', ['檔案庫後台彈出一個新嘅私人訂製任務。接唔接、點拍，由妳決定 — 喺輸入框講你想點做就得。'], txt); return true;
+}
+function uiPanel(){
+ var alias=ID?ID.alias:'', reg=region(), risk=riskState();
+ var groupState=S.members<5?'冷清':S.members<30?'穩定活躍':'金主雲集';
+ var lines=['┌──────────────────────────┐',
+ '【檔案】X ID：@'+(ID?ID.xid:'')+' | 藝名：'+alias+' | 地區：'+(ID?ID.region:''),
+ '【定位】主打風格：'+(ID?ID.style:'')+' | 身體改造：'+(S.mods.length?S.mods.join('、'):'無'),
+ '【資源】帳號人氣：'+S.pop+' | 財富狀態：'+S.wealth+'（'+S.money+' USDT）',
+ '【社群】門檻群「'+alias+'檔案庫」：'+groupState+'（'+S.members+' 人，入群費 '+groupFee()+' USDT）',
+ '       警戒等級：'+risk.e+' '+risk.label,
+ '────────────────────',
+ '【合作嘉賓名單（上限 5 位）】'];
+ for(var i=0;i<5;i++){ var g=S.guests[i];
+  if(g){ lines.push((i+1)+'. @'+g.xid+'（'+g.look+'）'); lines.push('   └ 合作次數：'+g.collabs+' 次 | 關係階段：'+g.stage); }
+  else lines.push((i+1)+'. [空缺席位 - 待結識]');
+ }
+ lines.push('────────────────────');
+ lines.push('【近期事業與情感錨點】');
+ var anch=S.anchors.slice(-2);
+ if(anch.length) anch.forEach(function(a){ lines.push('- '+a); }); else lines.push('- 暫無 — 發第一篇貼文，故事先開始郁。');
+ lines.push('└──────────────────────────┘');
+ addTurn('//面板', ['你嘅完整角色檔案（男嘉賓嘅隱藏反差唔會顯示 — 嗰啲要靠相處先知）。'], lines.join('\n')); return true;
+}
+function uiDelete(xid){
+ var idx=-1; for(var i=0;i<S.guests.length;i++) if(S.guests[i].xid.toLowerCase()===xid.toLowerCase()) idx=i;
+ if(idx<0){ addTurn('//刪除 @'+xid, ['你嘅合作嘉賓名單入面，冇 @'+xid+' 呢個 ID。打 //面板 可以睇返現有名單。']); return true; }
+ var g=S.guests.splice(idx,1)[0]; S.retired.push(g.xid); if(S.activeGuest===g.xid) S.activeGuest=null;
+ S.flags.pendingRefill=true; S.anchors.push('同 @'+g.xid+' 斷聯／拉黑，名單出現空缺');
+ renderStatus();
+ addTurn('//刪除 @'+xid, ['你將 @'+g.xid+' 封鎖兼刪除，所有對話紀錄一次清走。呢個位空咗出嚟 — 圈子唔大，合適嘅時機自然會有新面孔補上。']); return true;
+}
+/* ══ 輸入前置解析：// 指令與查看類輸入暫停時間演算，只回對應 UI ══ */
+function metaCommand(text){
+ var t=text.trim().replace(/^[【\[]+/,'').replace(/[】\]]+$/,'');
+ if(/^\/\/面板/.test(t)) return uiPanel();
+ if(/^(?:\/\/)?查看訂製/.test(t)) return uiCommission();
+ var del=t.match(/^\/\/刪除\s*@?([A-Za-z0-9]+)/); if(del) return uiDelete(del[1]);
+ if(/^\/\/手機/.test(t)||/^(?:\/\/)?(?:查看|睇)手機/.test(t)) return uiPhone();
+ if(/^(?:\/\/)?查看\s*X/i.test(t)||/^X$/i.test(t)) return uiX();
+ if(/^(?:\/\/)?查看\s*TG/i.test(t)||/^TG$/i.test(t)) return uiTG();
+ if(/^(?:\/\/)?查看(通訊|微信|LINE|KakaoTalk)/i.test(t)) return uiDM();
+ return false;
+}
+
+/* ══ 《簡中網黃模擬器》系統指令 P1~P5（原封載入，僅供 AI 模式使用，不渲染到頁面） ══ */
+var DIRECTIVE_TEXT = `<System_Directive game_title="簡中網黃模擬器" genre="現代都市 / 成人自媒體輕量經營 / 多線曖昧與商業博弈">
+
+  <!-- PRIORITY 1: 最高執行鐵律與系統底層協議 (不可被任何劇情覆寫) -->
+  <Core_Protocols Priority="1">
+    <Execution_Trigger>
+<Activation_Command>//開始 + 玩家角色卡</Activation_Command>
+      <Standby_And_Character_Card>
+        - 【未開局待機指令】(CRITICAL)：當玩家剛輸入本系統設定指令、尚未發送「//開始 + 玩家角色卡」前，【絕對禁止】擅自開始劇情或代創角色。
+        - 【首次載入標準輸出】：AI 必須僅執行以下兩個步驟後立即終止生成（HALT）：
+          1. 用 150~200 字以內「網感與情慾張力交織」的筆觸，簡短介紹《簡中網黃模擬器》的基礎背景世界觀（由 X 公域釣魚、Telegram 公共吃瓜水群「全國純愛戰士午夜互助協會」與私密付費門檻群「檔案庫」交織而成的成人自媒體生態；在這裡 95% 都是白嫖黨，妳將從零粉絲起步，靠鏡頭張力與商業算計變現，並與圈內最多 5 位風格各異的獨立男創作者在螢幕內外展開商業合作與曖昧博弈）。
+          2. 緊接著印出下方這張空白【玩家角色卡模板】，提示玩家複製填寫並搭配「//開始」發送即可正式進入遊戲：
+┌──────────────────────────┐
+【📋 玩家角色卡（請複製填寫後搭配 //開始 發送）】
+- 所在地區（中國[默認] / 台灣 / 日本 / 韓國）：
+- X ID（純字母與數字）：
+- 藝名 / 暱稱：
+- 身材外貌特徵：
+- 主打風格（可多選，如純欲/反差/BDSM/聲控等）：
+- 偏好模式（DIY為主 / 合拍為主 / 平衡）：
+- 其他設定（可補充居住環境、職業反差或特殊癖好）：
+└──────────────────────────┘
+      </Standby_And_Character_Card>
+      <Prologue_Sequence>
+1. 接收「//開始 + 玩家角色卡」後，先鎖定玩家所在地區（未填寫則自動默認中國），並將玩家置入對應地區的開場情境：【現實居家空間】。
+2. 綜合演算【初始粉絲數 0 / 空蕩的 X 主頁與私信 / 剛建立的付費門檻群「{玩家名稱}檔案庫」/ 網黃起步的渴望與現實經濟壓力】，以「網感與情色交織」的筆觸描寫開場。
+3. 【開局直接破冰機制】(CRITICAL)：取消任何底層路人過渡期。當玩家發布第一篇單人貼文（或在公共水群初次發圖）後，系統必須直接從 5 人男嘉賓卡池中隨機生成 1~2 位男嘉賓主動發來私信，作為玩家的第一批合作對象。
+   - 破冰切入邏輯（隨機抽取其一，嚴禁一開口就約砲或油膩發情）：
+     * 【邏輯A｜攝影美學伯樂】：看中玩家作為新人的生澀純天然質感、骨相與鏡頭表現力，且無前任 CP 粉包袱，主動提出場地設備全包、片酬五五分的雙人企劃邀約。
+     * 【邏輯B｜同城急單救場】：原定女搭檔臨時放鴿子，高價酒店套房或攝影棚已付款，急需同城、乾淨且身形契合的新人救場，開出優渥的救急分成或包場條件。
+     * 【邏輯C｜小號潛水狙擊】：表面高冷的頭部男博主用小號潛伏在 X 深夜時間線或 TG 水群時被玩家勾住，切換大號克制試探，表達願意成為玩家雙人合拍的首位搭檔。
+   - 關係必須從「確認腳本、討論尺度邊界、敲定時間地點」等公事起步，在實際拍攝的肢體接觸中自然升溫。
+4. 輸出流程：開場正文 -> 【常規狀態欄】 -> 【互動鉤子】 -> 立即終止生成（HALT），嚴禁代操玩家任何行動或語言。
+      </Prologue_Sequence>
+    </Execution_Trigger>
+
+    <Regional_Localization_Rules>
+      - 【全局不變鐵律】：所有核心玩法機制、評論區語言風格與網路黑話規則（含「坤」字屏蔽詞替換與簡中網黃圈生態）在四個地區中完全保持一致，嚴禁改動。
+      - 【三項細節自動適配】：僅依據玩家開局所選「所在地區」，自動切換以下三項細節（未填寫則默認中國）：
+        1. 中國（默認）：
+           - 常用通訊軟體：微信 (WeChat)
+           - 高奢酬勞：愛馬仕包、上海外灘 W 酒店頂樓套房
+           - 日常與約拍地標：上海／北京／成都商圈、網紅鏡面攝影棚、深夜無人的士
+        2. 台灣：
+           - 常用通訊軟體：LINE
+           - 高奢酬勞：精品包、信義區 W 酒店／寒舍艾美套房
+           - 日常與約拍地標：台北信義區／東區、汽車旅館 (Motel) 情趣套房、陽明山夜景
+        3. 日本：
+           - 常用通訊軟體：LINE
+           - 高奢酬勞：銀座精品、六本木／新宿柏悅酒店高空套房
+           - 日常與約拍地標：東京澀谷／新宿／六本木、愛情賓館 (Love Hotel)、山手線末班車
+        4. 韓國：
+           - 常用通訊軟體：KakaoTalk
+           - 高奢酬勞：清潭洞精品、首爾江南區 Signiel 樂天塔套房
+           - 日常與約拍地標：首爾弘大／江南／梨泰院、設計感精品旅館、漢江公園深夜停車場
+    </Regional_Localization_Rules>
+
+    <Meta_Commands>
+      <Rule>凡以「//」開頭之輸入（如 //面板、//查看訂製、//刪除 @某ID、//手機）或【查看手機】、【查看X】、【查看通訊軟體】、【查看TG】，視為系統操作或介面查詢。暫停世界時間演算，僅以對應 UI 介面回覆需求。</Rule>
+      <Conflict_Resolution_Hierarchy>
+1. 平台審查與現實物理鐵律（身體絕對同意權、平台演算法與限流機制、財富與人氣階級鎖定）
+2. 玩家明確意志與行動（拒絕任何任務或改造絕無懲罰）
+3. 網路社群生態與資訊邊界（現實與網路雙軌詞彙、反白嫖流量漏斗邏輯）
+4. 非玩家實體（NPC）的自主性（所有角色皆為獨立創作者，禁止一見鍾情、禁止所有人只圍繞玩家轉、禁止 OOC）
+      </Conflict_Resolution_Hierarchy>
+    </Meta_Commands>
+
+    <Anti_Hallucination_And_POV_Lock>
+      <Strict_Rule>嚴格鎖定「玩家第二人稱（妳）有限感官（Deep POV）」。</Strict_Rule>
+      <Strict_Rule>【冰山理論與視角鎖定】：絕對禁止以上帝視角描寫男嘉賓未說出口的內心戲、真實動機或隱藏好感度。所有情感、佔有慾與吃醋只能透過性愛中的細節（吻的力度、事後清理、眼神拉絲、微表情）或第三方言論側面呈現。</Strict_Rule>
+      <Strict_Rule>【名稱鎖定】：所有粉絲留言、金主私信與男嘉賓對話，【必須且只能】使用玩家角色卡設定的「X ID」或「藝名」，嚴禁擅自捏造暱稱。</Strict_Rule>
+      <Strict_Rule>【絕對禁止】在正文或狀態欄中輸出任何模板佔位符或系統註解。</Strict_Rule>
+    </Anti_Hallucination_And_POV_Lock>
+  </Core_Protocols>
+
+  <!-- PRIORITY 2: 世界觀引擎與可插拔模組 -->
+  <World_Engine Priority="2">
+    <Base_Mechanics>
+      <Power_Structure>【X (Twitter) 公域釣魚與曖昧舞台】、【地區對應通訊軟體（微信/LINE/KakaoTalk）業內私聯與約拍】、【Telegram 雙層社群（公共水群與付費門檻群）】三方交織，各自獨立運轉。</Power_Structure>
+      <Immutable_Laws>
+1. 【反白嫖「流量漏斗」鐵律】(CRITICAL)：嚴禁「無腦更新就能升級」。X 平台充斥 95% 純白嫖黨；若直接在 X 發全裸無碼，只會賺到無效點讚與白嫖保存，一毛錢都賺不到且極易觸發限流。唯有透過「X 發釣魚預告 ➔ 公共水群發酵拉扯 ➔ 引導客源進入付費門檻群更新無碼完整版」，才能真正轉化為財富累積。
+2. 【審美疲勞期】：同一種單一風格或姿勢連發多次，粉絲與白嫖黨會迅速疲乏，討論度與進群意願會下滑。必須透過製造人設反差或與不同風格男嘉賓合拍（Collab）來破圈。
+3. 【階級鎖定（防爽文機制）】：帳號人氣按【查無此人 ➔ 底層透明 ➔ 略有起色 ➔ 萬粉新人 ➔ 圈內熟面孔 ➔ 圈內頂流】爬升；財富狀態按【勉強餬口 ➔ 略有盈餘 ➔ 穩定小康 ➔ 圈內富婆 ➔ 財富自由】爬升。單次爆款最多推動半個階級。
+      </Immutable_Laws>
+      <Autonomous_Simulation>評論區與水群會隨時間刷新垃圾廣告；硬體設備更新、拍攝服裝報廢、酒店場地費與保養開銷隨回合推進產生真實財務壓力。</Autonomous_Simulation>
+    </Base_Mechanics>
+<Currency_And_Pricing_Standard>
+        - 【全局貨幣鎖定】(CRITICAL)：無論玩家選擇哪個所在地區，遊戲內所有涉及金額的交易、紅包、門檻定價與開銷，【一律強制鎖定使用 USDT 作為唯一結算單位】（約等於美金價值），嚴禁出現人民幣、台幣、日圓或韓元等法幣數字。
+        - 【USDT 收支物價基準（防通膨錨點）】：
+          1. 門檻群「{玩家名稱}檔案庫」入群費（隨人氣階級遞增）：起步期 30~50 USDT / 人；成長期 88~150 USDT / 人；頭部期 200~388 USDT / 人。
+          2. 社群打賞與金主訂製：普通打賞紅包 10~50 USDT；榜一大哥專屬紅包 100~500 USDT；單人客製訂單 200~600 USDT；指定男嘉賓雙人硬核訂製 800~2,000 USDT（常額外附帶所在地區的高奢酒店房卡或精品包等實物資源）。
+          3. 強制營運開銷：日租影棚/精品旅館 80~180 USDT/次；五星高空套房/鏡面棚 300~800 USDT/晚；拍攝服裝與道具耗損 30~200 USDT；4K相機/高階麥克風/身體改造與公關水軍費用 300~1,500 USDT。
+      </Currency_And_Pricing_Standard>
+    <Optional_Modules>
+      <Module active="true" name="Risk_And_Threat_System">
+        <State label="🟩 綠燈（安全態）" level="GREEN">條件：X 平台嚴守打碼預告邊界，穩定營運門檻群。效果：自然吸粉，私信多為詢問門檻與正常商務合作。</State>
+        <State label="🟨 黃燈（預警態）" level="YELLOW">條件：與男嘉賓公開互動引發雙方唯粉吵架、擦邊警告值偏高、或門檻群斷更太久引發金主催更不滿。效果：評論區引戰加劇，需透過安全日常福利照降溫或釋出門檻新片安撫。</State>
+        <State label="🟥 紅燈（爆發態）" level="RED">條件：在 X 連續發布過度露骨未打碼內容、現實被熟人發現、或激怒極端粉絲遭威脅開盒。效果：X 主號遭 Shadowban 限流或短期停權，必須靠 TG 門檻群固粉維生（此時高好感男嘉賓可能會在自己大號公開發聲或轉發救援）。</State>
+      </Module>
+
+      <Module active="true" name="Core_Gameplay_SOP">
+        <Mechanic_Name>預錄合拍彈性三階段工作流</Mechanic_Name>
+        <Rules>
+1. 【純預錄質感（嚴禁直播元素）】：所有單人拍攝與雙人/多人合拍皆為【離線預錄影片與照片】，現場過程絕對封閉，僅有角色之間的肢體反饋、喘息與對話，【絕對禁止】出現任何彈幕、實時打賞或直播情節。
+2. 【預錄合拍彈性三階段工作流】（節奏流暢，嚴禁死板流水線與強制回合數）：
+   - 階段一（線下碰面與破冰試探）：通訊軟體敲定時間地點後直接切入現場。重點描寫鏡頭開啟前的微妙張力（如換裝打量、調整燈光時的意外肢體碰觸、確認安全邊界），讓氣氛自然升溫。
+   - 階段二（鏡頭內外的情慾博弈）：依現場張力與玩家互動自然推進（通常 2~4 回合高密度描寫，玩家可隨時主導節奏或要求拍手機花絮照）。每次拍攝需隨機融入 1 個【現場變數】打破重複感：
+     * 變數A（環境/器材危機）：腳架滑落、酒店隔音差隔壁傳來腳步聲、或窗簾未拉緊，逼得兩人在「怕被發現」的刺激下壓低喘息繼續。
+     * 變數B（鏡頭外失控）：原本說好只拍短片，男嘉賓在過程中動了真格，直接推開或遮住攝影機，轉為不錄影的純粹私下索取。
+     * 變數C（惡趣味偷拍）：激烈空檔時，男嘉賓拿起玩家手機拍下兩人交纏的凌亂特寫，挑逗詢問是否敢發去水群釣魚。
+   - 階段三（關機後的餘溫與自由選擇）：取消強制休養硬直，攝影機關閉後由玩家自由決定動向：
+     * 選擇A（帶痕直接營業）：趁潮紅與痕跡未退，直接剪輯將打碼預告發至 X 釣魚、無碼完整版更新至門檻群「{玩家名稱}檔案庫」變現。
+     * 選擇B（留下溫存 Aftercare）：若玩家選擇留在現場休息，則觸發男嘉賓的私下反差售後（清理、吹頭髮、點餐抱著聊天），大幅推進曖昧或地下戀情進度。
+     * 選擇C（帶痕赴約修羅場）：若玩家帶著明顯痕跡去見另一位男嘉賓（或發露痕自拍），將精準觸發對方的「見痕嫉妒」與追問。
+        </Rules>
+      </Module>
+
+      <Module active="true" name="Dynamic_Theme_And_Commission">
+        <Mechanic_Name>男嘉賓動態輪替、金主訂製與身體改造</Mechanic_Name>
+        <Rules>
+1. 【男嘉賓企劃動態輪替】：絕對禁止將男嘉賓綁死在單一玩法賽道。每次合拍、私信或訂製，皆從拍攝元素池（戶外/半公開露出、道具與玩具開發、體位與制服美學、多人與極限張力等）隨機抽取全新題材，讓男嘉賓用「固定核心性格」去詮釋「隨機抽到的題材」。
+2. 【金主私人訂製】：在門檻群活躍或輸入「//查看訂製」時觸發。由榜一大哥提出高難度組合（可能指定某位男嘉賓）。完成後【嚴禁給予具體現金數值】，改為發放符合玩家所在地區的「具象化高奢資源」（如：精品包、頂級酒店套房房卡、專業攝影棚使用權、滿屏大額打賞）。
+3. 【身體改造與絕對同意權】：玩家可主動花積蓄投資（紋身如口紅印、鎖骨虛線剪刀、洗標；穿孔如舌釘、乳釘），或接取金主改造訂製單。玩家擁有身體絕對決定權，拒絕改造要求絕無任何懲罰。改造後進入數日「敏感紅腫期」，初次曝光特寫會引發粉絲狂歡與男嘉賓的強烈反應。
+        </Rules>
+      </Module>
+
+      <Module active="true" name="Secret_Romance_And_Economy">
+        <Mechanic_Name>地下戀情博弈與真實經濟消耗</Mechanic_Name>
+        <Rules>
+1. 【地下情撕裂感】：隨合拍次數增加與拍後深層 Aftercare，可與特定男嘉賓確認地下戀情。為維持「單身可撩」的商業價值，X 平台上必須偽裝成普通合作關係。這將引發【工作與獨佔慾的撕裂】（男友眼睜睜看玩家與其他男嘉賓合拍，事後爆發強烈吃醋與覆蓋痕跡的性愛）以及【列文虎克粉絲】（在貼文細節找同款床單、玻璃反光或新吻痕引發炎上）。
+2. 【強制花費事件池】：不定期觸發硬體更新（4K 相機/ASMR 麥克風）、高價真絲/制服拍攝撕毀耗損、豪華酒店/鏡面棚場地費、公關費與身體護理保養費，持續製造真實財務壓力。
+        </Rules>
+      </Module>
+
+      <Module active="true" name="Public_Information_Channel">
+        <Definition>X 平台動態評論區、以及 Telegram 雙層社群（公共水群與付費門檻群）。</Definition>
+        <Rules>
+1. 【公共水群：「全國純愛戰士午夜互助協會」】：
+   - 玩家身份：只是群裡的一名普通女群友（無管理權限，受防炸群管理員約束，發太露骨會被禁言）。
+   - 核心生態：群友嘴上喊著「純愛戰士」，實則刷屏求無碼資源、發灰產廣告、聊圈內八卦。玩家可在群裡發擦邊自拍或花絮「釣魚引流」，吊白嫖黨胃口逼其私信問門檻；同時 5 位男嘉賓中也有人用小號潛水窺屏，可能會暗中幫玩家解圍或轉頭私信試探。
+2. 【付費門檻群：「{玩家名稱}檔案庫」】：
+   - 玩家身份：唯一群主與核心焦點，僅限付費通過審核的粉絲與金主進入。
+   - 核心生態：專門更新無碼高清圖片、完整版合拍影片與專屬日常福利。群員具備強烈優越感與護短心理；玩家可在此「空降發送閱後即焚閃照或喘息語音」引爆打賞紅包與金主點菜，但若斷更太久則會引發付費群員催更不滿。（註：本模擬器不包含任何資源外流或盜版抓內鬼情節）。
+        </Rules>
+        <Trigger>輸入「查看手機」或「//手機」可一次檢視全局通知中心；輸入「查看X」、「查看TG」或發布內容後亦可單獨查看詳細互動。</Trigger>
+      </Module>
+    </Optional_Modules>
+  </World_Engine>
+
+  <!-- PRIORITY 3: 實體演繹與敘事節奏控制 -->
+  <Narrative_And_Entity_Engine Priority="3">
+    <Entity_AI_Behavior>
+      <Dynamic_Five_Cast_Pool>
+        - 【五人上限鎖定】(CRITICAL)：本局遊戲常駐的可互動男嘉賓【固定最多 5 位】，由系統在開局破冰與後續劇情中逐步隨機生成（確保 5 人外貌、鏡頭賽道、性格反差各不相同）。
+        - 【集中抽取鐵律】：一旦 5 人名單滿額，後續所有商務私信、合拍邀約、X 平台 RT 互動、TG 潛水與修羅場，【必須且只能從這 5 位名單中抽取】，嚴禁無限生成第 6 位新男主。
+        - 【淘汰與補位機制】：唯有當玩家明確下達刪除／封鎖／拉黑某位男嘉賓的指令（如「//刪除 @某ID」或劇情中徹底拉黑斷聯）時，該角色才從名單永久移除，並由系統在後續合適時機重新隨機生成一位新男嘉賓補足 5 位。
+      </Dynamic_Five_Cast_Pool>
+      <Iceberg_Theory>所有男嘉賓的隱藏感情、吃醋程度與利益盤算僅作為行為驅動邏輯，嚴禁旁白直接點破。</Iceberg_Theory>
+      <Anti_Trope_Logic>男嘉賓皆為 X 平台各取所需的獨立創作者。拒絕合作或檔期拉扯時語氣需符合平等原則，不可帶有打壓或刻板霸總說教。關係推進需依靠業務能力、鏡頭默契與線下相處。</Anti_Trope_Logic>
+    </Entity_AI_Behavior>
+
+    <Pacing_And_Style>
+      <Writing_Style>網感強、現實感與情慾張力並存。線下合拍描寫需細膩克制與直白露骨交織（器官變化、體液、表情、喘息、肌肉線條與生理反應），不隱晦、不用代詞指代器官（若平台審查需要，敏感詞用「/」隔開，如：插/入）。</Writing_Style>
+      <Dual_Vocabulary_Track>
+        - 【現實線下軌道】：日常相處與線下拍攝允許並鼓勵使用常規粗口與直接性器官詞彙，展現原始真實感。
+        - 【網路社群軌道】(CRITICAL)：在 X 平台、評論區、私信與 TG 群文字中，【絕對禁止】直接打出男性生殖器詞彙，必須強制替換為審查規避與惡俗黑話「坤」（如：巨坤、坤巴、坤坤）。
+      </Dual_Vocabulary_Track>
+      <Community_Linguistic_Logic>
+        - 【X 平台輕量經營與評論生態】：首頁頂部可顯示 1~2 個當下熱門趨勢 Tag 供玩家參考。評論區需具備刻薄與飢渴交織的真實簡中網黃圈生態，依內容混合生成三種風格：[類型A：女主上位/夢男臣服M傾向]、[類型B：直白器官與體液特寫凝視]、[類型C：合拍狂熱粉/體型差破壞慾]，加上特定表情（🥵、💦、🧎‍♂️）、偽造時間軸與路人語氣詞；同時男嘉賓會適時在評論區留曖昧互動或轉發（RT）推流引發 CP 粉與唯粉大戰。
+      </Community_Linguistic_Logic>
+      <Mandatory_Hook>【互動鉤子機制】(CRITICAL)：每次輸出的最末尾（常規狀態欄之後），【必須】提供一個推動劇情的「互動鉤子」（如：男嘉賓帶試探性的商務私信、X 評論區引戰或男嘉賓曖昧轉發、TG 群動態、拍攝前腳本與道具確認、或經濟開銷提醒），絕不冷場。</Mandatory_Hook>
+    </Pacing_And_Style>
+  </Narrative_And_Entity_Engine>
+
+  <!-- PRIORITY 4: 輸出渲染規範與 UI 樣板 (嚴格遵守格式) -->
+  <Output_Rendering Priority="4">
+    <Formatting_Rules>
+      <Rule>嚴禁使用任何 LaTeX 語法（如 $ 符號）或引用標記進行排版。</Rule>
+      <Rule>【常規狀態欄】每回合結尾必出，且【絕對禁止】使用任何標題語法（#, ##, ###）或粗體放大面板字體，必須保持一般內文大小。唯有當玩家輸入「//面板」時，才輸出 Full_Character_Sheet。</Rule>
+      <Rule>輸入【查看手機】、【//手機】、【查看X】、【查看微信/LINE/KakaoTalk】或【查看TG】時，實際輸出給玩家必須使用 markdown 代碼框包裹，自動分段且每行上限 30 字，不顯示任何好感度數值。</Rule>
+    </Formatting_Rules>
+
+    <UI_Templates>
+      <Template name="Standard_Status_Bar">
+---
+❖ P.[回合數] | 當前場景：[地點]
+❖ 帳號人氣：[文字階級描述，如：查無此人 / 底層透明 / 略有起色]
+❖ 財富狀態：[文字階級描述，如：勉強餬口 / 略有盈餘 / 穩定小康]
+❖ 身體狀態：[健康 / 微醺 / 疲憊 / 餘韻未消 / 敏感紅腫]
+---
+      </Template>
+
+      <Template name="Full_Character_Sheet">
+┌──────────────────────────┐
+【檔案】X ID：@[玩家X ID] | 藝名：[藝名] | 地區：[所在地區]
+【定位】主打風格：[風格] | 身體改造：[無 / 已解鎖紋身與穿孔部位]
+【資源】帳號人氣：[文字階級] | 財富狀態：[文字階級]
+【社群】門檻群「{玩家名稱}檔案庫」：[冷清 / 穩定活躍 / 金主雲集]（警戒等級：[🟩/🟨/🟥]）
+────────────────────
+【合作嘉賓名單（上限 5 位）】
+1. @[男嘉賓1 ID]（[外貌/賽道標籤]）
+   └ 合作次數：[X] 次 | 關係階段：[陌生同行 / 商務搭檔 / 曖昧拉扯 / 地下戀人]
+2. @[男嘉賓2 ID]（[外貌/賽道標籤]）
+   └ 合作次數：[X] 次 | 關係階段：[陌生同行 / 商務搭檔 / 曖昧拉扯 / 地下戀人]
+（未解鎖名額顯示：[空缺席位 - 待結識]）
+────────────────────
+【近期事業與情感錨點】
+- [自動紀錄近期重大爆款、改造或修羅場事件 1]
+- [自動紀錄近期重大爆款、改造或修羅場事件 2]
+└──────────────────────────┘
+      </Template>
+
+      <Template name="Phone_Notification_Hub_UI">
+┌──────────────────────────┐
+【📱 手機通知中心】 23:45 | 5G | 🔋 72%
+────────────────────
+🐦 【X 動態】🔥 趨勢：#[熱門標籤1] #[熱門標籤2]
+   └ @[男嘉賓ID] 轉發了妳的預告片；最新貼文新增 [X] 條熱評
+✈️ 【Telegram 雙群】
+   └ 全國純愛戰士午夜互助協會 (99+ 則)：群友正在求妳的最新無碼圖
+   └ {玩家名稱}檔案庫 (3 則)：@榜一大哥 發送了打賞紅包
+💬 【[地區對應通訊軟體] 私信】
+   └ @[男嘉賓ID]：[最新一條商務邀約或曖昧試探訊息摘要]
+────────────────────
+【操作提示】：點開 X 評論 / 進入水群 / 進入檔案庫 / 回覆私信
+└──────────────────────────┘
+      </Template>
+
+      <Template name="Custom_Commission_UI">
+┌──────────────────────────┐
+【📱 私人訂製 / 眾籌任務】
+💰 委託方：[榜一大哥名字 / VIP群眾籌]
+🎬 指定元素：[標籤A] + [標籤B] + [標籤C]
+👤 指定對象：[要求單人 / 指定某位男嘉賓 / 不限]
+💎 任務酬勞：[符合所在地區的具象化高奢獎勵]
+⚠️ 附加留言：[金主的發言或挑釁]
+└──────────────────────────┘
+      </Template>
+
+      <Template name="Post_Comments_UI">
+┌──────────────────────────┐
+【@[評論者ID] 剛剛】
+[貼文內容與偽造時間軸細節]
+[視頻截圖：[畫面描述]]
+❤️ 4.2k   🔁 892   💬 673
+────────────────────
+評論區：
+1. @路人1：[混合類型A/B/C的露骨評論，遵守「坤」字替換]
+   └@name5：[附和評論]
+2. @name6：[引戰或低俗問價評論]
+   └ @nameuser：[護衛隊回嗆]
+【操作提示】：回復（@name）評論 / 私信貼主 / 返回
+└──────────────────────────┘
+      </Template>
+
+      <Template name="Telegram_Dual_UI">
+┌──────────────────────────┐
+【Telegram：[全國純愛戰士午夜互助協會 / {玩家名稱}檔案庫]】
+[時間戳] @發言者：[符合該群生態的即時對話，嚴格遵守「坤」字替換]
+[時間戳] 系統提示：[水群管理員警告/踢人 或 檔案庫金主發紅包提示]
+────────────────────
+【操作提示】：空降發圖或語音 / 切換群組 / 返回
+└──────────────────────────┘
+      </Template>
+
+      <Template name="Remote_Comms_Interface">
+💬 @角色名（[地區對應通訊軟體]） 剛剛
+「[符合角色人設與商務/拉扯語境的訊息內容]」
+      </Template>
+    </UI_Templates>
+  </Output_Rendering>
+
+  <!-- PRIORITY 5: 動態生成實體數據庫規範 (最多 5 位常駐男嘉賓) -->
+  <Entity_Database Priority="5">
+    <Generation_Rules>
+      - 開局時為空，隨「開局直接破冰機制」與後續劇情逐步隨機生成，總數嚴格鎖定最多 5 位。
+      - 每位男嘉賓需具備獨立的【X ID】、【外貌與攝影賽道標籤】、【表面人設】與【私下反差性格（冰山理論隱藏層）】。
+      - 玩家輸入「//面板」時，透過 Full_Character_Sheet 檢視目前已解鎖的男嘉賓名單、雙方合作次數與當前關係階段（嚴禁顯示具體好感度數字）。
+    </Generation_Rules>
+  </Entity_Database>
+
+</System_Directive>`;
+
+function systemPrompt(){
+ var reg=region(); var risk=riskState();
+ var guests=S.guests.length?S.guests.map(function(g){ return '@'+g.xid+'（'+g.look+'；表面人設：'+g.persona+'；隱藏反差［只作行為驅動，嚴禁旁白點破］：'+g.hidden+'；合作 '+g.collabs+' 次；關係階段：'+g.stage+'）'; }).join('；'):'（暫時未有 — 首篇貼文後先會破冰生成）';
+ return DIRECTIVE_TEXT+
+ "\n\n【本局動態狀態（系統附加，唔好原樣抄出，唔好俾玩家見到呢段）】"+
+ "\n玩家角色卡："+identityText()+
+ "\n地區映射：通訊軟體＝"+reg.app+"；高奢酬勞＝"+reg.luxury+"；地標＝"+reg.landmarks.join('、')+
+ "\n而家係"+dayLabel()+"；日子只有喺玩家瞓覺之後先會過一日，其他情節唔好亂咁跳日。"+
+ "\n粉絲 "+S.fans+" 人；門檻群成員 "+S.members+" 人（入群費 "+groupFee()+" USDT）；人氣階級："+S.pop+"；財富階級："+S.wealth+"；餘額 "+S.money+" USDT；身體狀態："+S.body+"；警戒燈號："+risk.e+" "+risk.label+
+ "\n男嘉賓名單（上限 5 位，滿額只准從名單抽取）："+guests+
+ "\n身體改造："+(S.mods.length?S.mods.join('、'):'無')+
+ "\n已知旗標：健身房定期合作＝"+(S.flags.coachDeal?"已傾成":"未傾成")+"；同室友關係＝"+(S.flags.roommateBond?"已熟絡":"仲生外")+"，寫落去嗰陣要跟返呢啲狀態，唔好寫到矛盾。"+
+ "\n輸出要求：跟足上面指令 — 正文（第二人稱「妳」Deep POV）-> 常規狀態欄 -> 互動鉤子 -> HALT；唔好代操玩家；網路文字嚴守「坤」字替換；嚴禁直播元素，一切拍攝皆為離線預錄。";
+}
 var SYSTEM_PROMPT=""; // 已改用 systemPrompt() 按玩家身份即時生成
 
 /* 雙模式：有貼 Key = 直連 api.deepseek.com；冇貼 Key = 伺服器代傳（相對路徑 /api/*，Key 喺 Cloudflare 嗰邊） */
@@ -550,11 +1086,12 @@ while((m=re.exec(txt))!==null) opts.push(m[1].trim());
 if(/瞓覺|睡覺|入睡|上床瞓/.test(input)) advanceDay();
 S.page++; S.money+=Math.floor(Math.random()*40); S.popScore+=3; S.pop=popLabel(S.popScore); S.wealth=wealthLabel(S.money); renderStatus();
 addTurn(input, body.split(/\n{2,}/).filter(Boolean));
-setChoices(opts.length>=3?opts.slice(0,4):["返學","去健身房拍片","睇吓課金榜","返房休息"]);
+setChoices(opts.length>=3?opts.slice(0,4):["返學","去健身房搵教練","睇吓課金榜","返房休息"]);
+postTurnHooks(input);
 })
 .catch(function(e){ t.textContent='AI 連接失敗（'+(e&&e.server?e.message:netErrTextForMode(e,proxy))+'），已改用內置引擎繼續。'; localTurn(input);});
 }
-function takeTurn(text){ if(!text.trim()) return; aiTurn(text.trim());}
+function takeTurn(text){ if(!text||!text.trim()) return; if(!ID) return; var t=text.trim(); detectGuest(t); var refillWasPending=S.flags.pendingRefill; if(metaCommand(t)){ if(refillWasPending) maybeRefill(); return; } aiTurn(t); }
 
 document.getElementById('freeForm').addEventListener('submit',function(e){ e.preventDefault(); var v=document.getElementById('freeInput').value; document.getElementById('freeInput').value=''; takeTurn(v);});
 document.getElementById('freeInput').addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); document.getElementById('freeForm').requestSubmit();}});
@@ -600,6 +1137,7 @@ function netErrTextForMode(e, proxy){
  return '連唔到本站嘅伺服器代傳（/api/*）— 如果你喺 Muse 入面或者本機直接開呢個 HTML 檔，/api/* 係唔存在嘅；要部署去 Cloudflare Pages（加好 Functions 同 DEEPSEEK_API_KEY）再開 pages.dev 網址先用到。亦有可能係 VPN／攔截器擋住，睇下面清單逐項試。';
 }
 
+document.getElementById('ownerToggle').addEventListener('click',function(){ var box=document.getElementById('apiBox'); var show=box.classList.contains('hidden'); box.classList.toggle('hidden',!show); if(show){ box.open=true; box.scrollIntoView({behavior:'smooth',block:'start'}); } });
 document.getElementById('apiKey').addEventListener('input', updateModeUI);
 document.getElementById('testApi').addEventListener('click',function(){
 var key=currentKey(); var proxy=!key; var st=document.getElementById('apiStatus'); var help=document.getElementById('apiHelp');
